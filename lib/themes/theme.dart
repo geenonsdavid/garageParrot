@@ -7,23 +7,36 @@ final ThemeData theme = ThemeData.light().copyWith(
   colorScheme:const  ColorScheme.light(
       primary: primary,
   ),
-  textTheme: const TextTheme(
+  textTheme: TextTheme(
     titleLarge: TextStyle(
-      fontSize: 32,
+      fontSize: 24,
+      fontFamily: 'comic',
+      fontWeight: FontWeight.bold,
+      color: secondary,
+      shadows: [Shadow(
+        color: Colors.black.withOpacity(0.25),
+        offset: const Offset(4, 4),
+        blurRadius: 4,
+
+      )]
+    ),
+    titleMedium: const TextStyle(
+      fontSize: 20,
       fontFamily: 'Roboto',
       fontWeight: FontWeight.bold,
       color: secondary,
     ),
-    titleMedium: TextStyle(
-      fontSize: 20,
+    titleSmall: const TextStyle(
+      fontSize: 18,
       fontFamily: 'Roboto',
-      fontWeight: FontWeight.w500,
+      fontWeight: FontWeight.bold,
       color: secondary,
     ),
-    labelSmall: TextStyle(
-      fontSize: 20,
+
+    labelSmall: const TextStyle(
+      fontSize: 18,
       fontFamily: 'Roboto',
-      fontWeight: FontWeight.w500,
+      fontWeight: FontWeight.bold,
       color: secondary,
     ),
   ),
