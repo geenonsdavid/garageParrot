@@ -62,7 +62,7 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
                     height: heightLogo,
                     width: widthLogo,
                   ),
-                  Text(widget.title, style: Theme.of(context).textTheme.titleLarge),
+                  Text(widget.title, style: Theme.of(context).textTheme.headlineLarge),
                   Row(
                     children: [
                       // button connexion
@@ -77,7 +77,7 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
                       screenPhone
                           ? const SizedBox.shrink()
                           : Text('Connexion',
-                              style: Theme.of(context).textTheme.titleMedium),
+                              style: Theme.of(context).textTheme.headlineMedium),
                     ],
                   ),
                 ],
@@ -106,7 +106,7 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
                             secondary, BlendMode.srcIn),
                       ),
 
-                      Text('Accueil', style: Theme.of(context).textTheme.titleLarge),
+                      Text('Accueil', style: Theme.of(context).textTheme.headlineMedium),
                     ],
                   ):
                   Row(
@@ -119,7 +119,7 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
                             secondary, BlendMode.srcIn),
                       ),
 
-                      Text('Accueil', style: Theme.of(context).textTheme.titleLarge),
+                      Text('Accueil', style: Theme.of(context).textTheme.headlineMedium),
                     ],
                   ),
                   // Galerie
@@ -134,7 +134,7 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
                             secondary, BlendMode.srcIn),
                       ),
 
-                      Text('Galerie', style: Theme.of(context).textTheme.titleLarge),
+                      Text('Galerie', style: Theme.of(context).textTheme.headlineMedium),
                     ],
                   ):
                   Row(
@@ -147,7 +147,7 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
                             secondary, BlendMode.srcIn),
                       ),
 
-                      Text('Galerie', style: Theme.of(context).textTheme.titleLarge),
+                      Text('Galerie', style: Theme.of(context).textTheme.headlineMedium),
                     ],
                   ),
                   // Admin
@@ -162,7 +162,7 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
                             secondary, BlendMode.srcIn),
                       ),
 
-                      Text('Administrateur', style: Theme.of(context).textTheme.titleLarge),
+                      Text('Administrateur', style: Theme.of(context).textTheme.headlineMedium),
                     ],
                   ):
                   Row(
@@ -175,7 +175,7 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
                             secondary, BlendMode.srcIn),
                       ),
 
-                      Text('Administrateur', style: Theme.of(context).textTheme.titleLarge),
+                      Text('Administrateur', style: Theme.of(context).textTheme.headlineMedium),
                     ],
                   ),
                 ],
