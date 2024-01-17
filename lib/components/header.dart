@@ -8,11 +8,11 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
   const Header({
     super.key,
     required this.widget,
-    required this.currentWidth,
+    required this.isScreenPhone
   });
 
   final HomePage widget;
-  final double currentWidth;
+  final bool isScreenPhone;
 
   @override
   // height of header
@@ -20,19 +20,7 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    double heightLogo;
-    double widthLogo;
-    bool screenPhone;
-    // responsive logo
-    if (currentWidth < 480) {
-      screenPhone = true;
-      heightLogo = 50;
-      widthLogo = 50;
-    } else {
-      screenPhone = false;
-      heightLogo = 100;
-      widthLogo = 100;
-    }
+    
 
     return Container(
       color: primary,
@@ -45,7 +33,7 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
             ),
             //navBar
             child: SizedBox(
-              height: screenPhone ? 30 : 0,
+              height: isScreenPhone ? 30 : 0,
               width: double.infinity,
             ),
           ),
@@ -58,9 +46,9 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Image.asset(
-                    'logo_garage_parrot.png',
-                    height: heightLogo,
-                    width: widthLogo,
+                    'assets/logo_garage_parrot.png',
+                    height: isScreenPhone ? 50 : 100,
+                    width: isScreenPhone ? 50 : 100,
                   ),
                   Text(widget.title, style: Theme.of(context).textTheme.headlineLarge),
                   Row(
@@ -69,12 +57,12 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
                       IconButton(
                         onPressed: () {},
                         icon: SvgPicture.asset(
-                          '/icons/power-off-solid.svg',
+                          'assets/icons/power-off-solid.svg',
                           colorFilter:
                               const ColorFilter.mode(secondary, BlendMode.srcIn),
                         ),
                       ),
-                      screenPhone
+                      isScreenPhone
                           ? const SizedBox.shrink()
                           : Text('Connexion',
                               style: Theme.of(context).textTheme.headlineMedium),
@@ -95,11 +83,11 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   // Accueil
-                  screenPhone ?
+                  isScreenPhone ?
                   Column(
                     children: [
                       SvgPicture.asset(
-                        'icons/house-solid.svg',
+                        'assets/icons/house-solid.svg',
                         height: 30,
                         width: 30,
                         colorFilter: const ColorFilter.mode(
@@ -112,7 +100,7 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
                   Row(
                     children: [
                       SvgPicture.asset(
-                        'icons/house-solid.svg',
+                        'assets/icons/house-solid.svg',
                         height: 30,
                         width: 30,
                         colorFilter: const ColorFilter.mode(
@@ -123,11 +111,11 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
                     ],
                   ),
                   // Galerie
-                  screenPhone ?
+                  isScreenPhone ?
                   Column(
                     children: [
                       SvgPicture.asset(
-                        'icons/car-on-solid.svg',
+                        'assets/icons/car-on-solid.svg',
                         height: 30,
                         width: 30,
                         colorFilter: const ColorFilter.mode(
@@ -140,7 +128,7 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
                   Row(
                     children: [
                       SvgPicture.asset(
-                        'icons/car-on-solid.svg',
+                        'assets/icons/car-on-solid.svg',
                         height: 30,
                         width: 30,
                         colorFilter: const ColorFilter.mode(
@@ -151,11 +139,11 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
                     ],
                   ),
                   // Admin
-                  screenPhone ?
+                  isScreenPhone ?
                   Column(
                     children: [
                       SvgPicture.asset(
-                        'icons/admin.svg',
+                        'assets/icons/admin.svg',
                         height: 30,
                         width: 30,
                         colorFilter: const ColorFilter.mode(
@@ -168,7 +156,7 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
                   Row(
                     children: [
                       SvgPicture.asset(
-                        'icons/admin.svg',
+                        'assets/icons/admin.svg',
                         height: 30,
                         width: 30,
                         colorFilter: const ColorFilter.mode(
