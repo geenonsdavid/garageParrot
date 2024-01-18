@@ -24,7 +24,7 @@ class _HomePageState extends State<HomePage> {
     }
     return Scaffold(
       appBar: Header(widget: widget,isScreenPhone: isScreenPhone),
-      body: Column(
+      body: ListView(
         children: [
 
           const Text('boby'),

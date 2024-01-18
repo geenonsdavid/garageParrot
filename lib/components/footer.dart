@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:garage_parrot/components/formcontact.dart';
 import 'package:garage_parrot/homepage.dart';
 import 'package:garage_parrot/themes/colors.dart';
 
@@ -70,11 +71,8 @@ class Footer extends StatelessWidget {
                             ),
                           ),
                         ),
-                        TextButton(
-                          onPressed: () {},
-                          child: Text('Formulaire de contact',
-                              style: Theme.of(context).textTheme.labelLarge),
-                        )
+                        const SizedBox(height: 16),
+                        const FormContact()
                       ],
                     ),
                   ),
