@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:garage_parrot/components/formcontact.dart';
+import 'package:garage_parrot/components/timesopen.dart';
 import 'package:garage_parrot/homepage.dart';
 import 'package:garage_parrot/themes/colors.dart';
 
@@ -90,7 +91,7 @@ class Footer extends StatelessWidget {
           const Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('Widget Horaire'),
+              TimesOpen(),
             ],
           ),
         ],
