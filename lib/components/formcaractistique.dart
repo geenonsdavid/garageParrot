@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:garage_parrot/components/customfield.dart';
 import 'package:garage_parrot/themes/colors.dart';
@@ -20,9 +22,15 @@ class FormContactState extends State<FormContact> {
   //
   // Note: This is a `GlobalKey<FormState>`,
   // not a GlobalKey<MyCustomFormState>.
-  String email = "";
-  String name = "";
-  String lastname = "";
+  Double? price ;
+  String marque = "";
+  String model = "";
+  int? year;
+  int? kilometer;
+  int? din;
+  int? fiscPower;
+  String color = "";
+
   final _formKey = GlobalKey<FormState>();
   final _priceFocusNode = FocusNode();
   final _marqueFocusNode = FocusNode();
