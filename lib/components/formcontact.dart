@@ -35,7 +35,7 @@ class FormContactState extends State<FormContact> {
     // Build a Form widget using the _formKey created above.
 
     return Container(
-      decoration: BoxDecoration(
+          decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: const BorderRadius.all(Radius.circular(8)),
           border: Border.all(
@@ -43,8 +43,7 @@ class FormContactState extends State<FormContact> {
             color: secondary,
           )),
       padding: const EdgeInsets.all(8),
-      //color: Colors.white,
-      constraints: const BoxConstraints(maxWidth: 400),
+      constraints: const BoxConstraints(maxWidth: 300),
       child: Column(
         children: [
           Padding(
