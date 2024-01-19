@@ -16,7 +16,7 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   // height of header
-  Size get preferredSize => const Size.fromHeight(150);
+  Size get preferredSize => const Size.fromHeight(152);
 
   @override
   Widget build(BuildContext context) {
