@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:garage_parrot/components/formcontact.dart';
+import 'package:garage_parrot/components/line.dart';
 import 'package:garage_parrot/components/timesopen.dart';
 import 'package:garage_parrot/homepage.dart';
 import 'package:garage_parrot/themes/colors.dart';
+
+import 'phone_number.dart';
 
 class Footer extends StatelessWidget {
   const Footer(
@@ -22,80 +25,21 @@ class Footer extends StatelessWidget {
       child: Column(
         children: [
           // contact section
-          Row(
+          Column(
             children: [
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: DecoratedBox(
-                    decoration:
-                    BoxDecoration(
-                        border: !isScreenPhone ? Border.all(
-                          width: 1,
-                          color: secondary,
-                        ):null,
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(8)),
-                            ),
-                    child: Column(
-                      children: [
-                        Text('Nous contacter',
-                            style: Theme.of(context).textTheme.headlineMedium),
-                        Container(
-                          constraints: const BoxConstraints(
-                            minWidth: 200,
-                          ),
-                          child: DecoratedBox(
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                          border: Border.all(
-                            width: 1,
-                            color: secondary,
-                          ),
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(8)),
-                              ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Container(
-                                  padding: const EdgeInsets.only(top:8),
-                                  child: Text('Téléphone',
-                                      style: Theme.of(context).textTheme.bodyLarge),
-                                ),
-                                Container(
-                                      padding: const EdgeInsets.all(8),
-                                      child: Text('07 83 55 20 17',
-                                      style: Theme.of(context).textTheme.bodyLarge),
-                                    ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 16),
-                        const FormContact()
-                      ],
-                    ),
-                  ),
-                ),
-              ),
+              Text('Nous contacter', style: Theme.of(context).textTheme.headlineMedium),
+              const PhoneSection(),
+              const SizedBox(height: 8,),
+              const FormContact()
             ],
           ),
-          // horaire section
-          Container(
-            color: secondary,
-            child: SizedBox.fromSize(
-              size: const Size(100, 2),
-            ),
-          ),
-          const Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TimesOpen(),
-            ],
-          ),
+          const Line(),
+          // widget TimesOpen for show times open
+          const TimesOpen(),
         ],
       ),
     );
   }
 }
+
+
