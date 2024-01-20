@@ -31,13 +31,13 @@ final ThemeData theme = ThemeData.light().copyWith(
       fontWeight: FontWeight.bold,
       color: secondary,
     ),
-    // link : size 20 normal
+    // label : size 18 normal black
     labelLarge: const TextStyle(
-      fontSize: 20,
+      fontSize: 18,
       fontWeight: FontWeight.normal,
-      color: secondary,
+      color: Colors.black,
     ),
-    // texte16: size 16 normal
+    // texte16: size 16 normal black
     bodyLarge: const TextStyle(
       color: Colors.black,
       fontSize: 16,
