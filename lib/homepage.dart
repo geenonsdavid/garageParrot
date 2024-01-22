@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:garage_parrot/components/footer.dart';
+import 'package:garage_parrot/components/form_caracteristic.dart';
 import 'components/header.dart';
 
 class HomePage extends StatefulWidget {
@@ -26,7 +27,7 @@ class _HomePageState extends State<HomePage> {
       appBar: Header(widget: widget,isScreenPhone: isScreenPhone),
       body: ListView(
         children: [
-
+          const FormCaracteristic(),
           const Text('boby'),
           Footer(widget: widget, isScreenPhone: isScreenPhone),
           FloatingActionButton(
