@@ -38,6 +38,7 @@ class FormCaracteristicState extends State<FormCaracteristic> {
   bool vitreArriere = false;
   int? selectedDoor;
   String? selectedFuel;
+  String? selectedGearbox;
   final _formKey = GlobalKey<FormState>();
   final _priceFocusNode = FocusNode();
   final _marqueFocusNode = FocusNode();
@@ -229,6 +230,11 @@ class FormCaracteristicState extends State<FormCaracteristic> {
     int? selectedDoor =
         Provider.of<CaracteristicProvider>(context, listen: false).selectedDoor;
     debugPrint("Nombre de portes : $selectedDoor");
+
+    // afficher type de boite
+    String? selectedGearbox =
+        Provider.of<CaracteristicProvider>(context, listen: false).selectedGearbox;
+    debugPrint("Type de boite : $selectedGearbox");
     String? selectedFuel =
         Provider.of<CaracteristicProvider>(context, listen: false).selectedFuel;
     debugPrint("Type de carburant: $selectedFuel");
