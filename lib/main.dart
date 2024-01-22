@@ -1,10 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:garage_parrot/homepage.dart';
+import 'package:garage_parrot/providers/caracteristic_provider.dart';
 import 'package:garage_parrot/themes/theme.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => CaracteristicProvider()),
+        // Ajoutez d'autres fournisseurs si nécessaire
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
