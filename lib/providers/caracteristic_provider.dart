@@ -16,4 +16,11 @@ class CaracteristicProvider with ChangeNotifier {
     _selectedFuel = value;
     notifyListeners();
   }
+
+  String? _selectedGearbox;
+  String? get selectedGearbox => _selectedGearbox;
+  void updateSelectedGearbox(String? value) {
+    _selectedGearbox = value;
+    notifyListeners();
+  }
 }
