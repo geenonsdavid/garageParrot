@@ -3,7 +3,10 @@ import 'package:garage_parrot/components/customfield.dart';
 import 'package:garage_parrot/components/radio_door.dart';
 import 'package:garage_parrot/components/radio_fuel.dart';
 import 'package:garage_parrot/components/radio_gearbox.dart';
+import 'package:garage_parrot/components/switch_option.dart';
+import 'package:garage_parrot/providers/caracteristic_provider.dart';
 import 'package:garage_parrot/themes/colors.dart';
+import 'package:provider/provider.dart';
 
 // Define a custom Form widget.
 class FormCaracteristic extends StatefulWidget {
@@ -23,7 +26,7 @@ class FormCaracteristicState extends State<FormCaracteristic> {
   //
   // Note: This is a `GlobalKey<FormState>`,
   // not a GlobalKey<MyCustomFormState>.
-  double? price ;
+  double? price;
   String marque = "";
   String model = "";
   int? year;
@@ -31,7 +34,10 @@ class FormCaracteristicState extends State<FormCaracteristic> {
   int? din;
   int? fiscPower;
   String color = "";
-
+  bool vitreAvant = false;
+  bool vitreArriere = false;
+  int? selectedDoor;
+  String? selectedFuel;
   final _formKey = GlobalKey<FormState>();
   final _priceFocusNode = FocusNode();
   final _marqueFocusNode = FocusNode();
@@ -41,7 +47,7 @@ class FormCaracteristicState extends State<FormCaracteristic> {
   final _dinFocusNode = FocusNode();
   final _fiscPowerFocusNode = FocusNode();
   final _colorFocusNode = FocusNode();
-
+//int? selectedDoor = Provider.of<CaracteristicProvider>(context).selectedDoor;
   @override
   Widget build(BuildContext context) {
     // Build a Form widget using the _formKey created above.
@@ -71,64 +77,127 @@ class FormCaracteristicState extends State<FormCaracteristic> {
               children: <Widget>[
                 // Add TextFormFields and ElevatedButton here.
                 CustomField(
-                    context: context,
-                    customLabel: "Prix",
-                    customHintText: "Veuillez entrer le prix",
-                    customFocus: _priceFocusNode,
-                    customRequestFocus: _marqueFocusNode),
+                  context: context,
+                  customLabel: "Prix",
+                  customHintText: "Veuillez entrer le prix",
+                  customFocus: _priceFocusNode,
+                  customRequestFocus: _marqueFocusNode,
+                  onValueChanged: (value) {
+                    setState(() {
+                      price = double.parse(value);
+                    });
+                  },
+                ),
                 const SizedBox(height: 10),
                 CustomField(
-                    context: context,
-                    customLabel: "Marque",
-                    customHintText: "Citroën, Ford, Peugeot, etc",
-                    customFocus: _marqueFocusNode,
-                    customRequestFocus: _modelFocusNode),
+                  context: context,
+                  customLabel: "Marque",
+                  customHintText: "Citroën, Ford, Peugeot, etc",
+                  customFocus: _marqueFocusNode,
+                  customRequestFocus: _modelFocusNode,
+                  onValueChanged: (value) {
+                    setState(() {
+                      marque = value;
+                    });
+                  },
+                ),
                 const SizedBox(height: 10),
                 CustomField(
-                    context: context,
-                    customLabel: "Modèle",
-                    customHintText: "Corsa, twingo, clio, etc",
-                    customFocus: _modelFocusNode,
-                    customRequestFocus: _yearFocusNode),
+                  context: context,
+                  customLabel: "Modèle",
+                  customHintText: "Corsa, twingo, clio, etc",
+                  customFocus: _modelFocusNode,
+                  customRequestFocus: _yearFocusNode,
+                  onValueChanged: (value) {
+                    setState(() {
+                      model = value;
+                    });
+                  },
+                ),
                 const SizedBox(height: 10),
                 CustomField(
-                    context: context,
-                    customLabel: "Année",
-                    customHintText: "Année de mise en circulation",
-                    customFocus: _yearFocusNode,
-                    customRequestFocus: _kilometerFocusNode),
+                  context: context,
+                  customLabel: "Année",
+                  customHintText: "Année de mise en circulation",
+                  customFocus: _yearFocusNode,
+                  customRequestFocus: _kilometerFocusNode,
+                  onValueChanged: (value) {
+                    setState(() {
+                      year = int.parse(value);
+                    });
+                  },
+                ),
                 const SizedBox(height: 10),
                 CustomField(
-                    context: context,
-                    customLabel: "Kilomètres",
-                    customHintText: "Saisir les kilomètres",
-                    customFocus: _kilometerFocusNode,
-                    customRequestFocus: _kilometerFocusNode),
+                  context: context,
+                  customLabel: "Kilomètres",
+                  customHintText: "Saisir les kilomètres",
+                  customFocus: _kilometerFocusNode,
+                  customRequestFocus: _dinFocusNode,
+                  onValueChanged: (value) {
+                    setState(() {
+                      kilometer = int.parse(value);
+                    });
+                  },
+                ),
                 const SizedBox(height: 10),
                 CustomField(
-                    context: context,
-                    customLabel: "Puissance DIN",
-                    customHintText: "Saisir la puissance DIN",
-                    customFocus: _dinFocusNode,
-                    customRequestFocus: _fiscPowerFocusNode),
+                  context: context,
+                  customLabel: "Puissance DIN",
+                  customHintText: "Saisir la puissance DIN",
+                  customFocus: _dinFocusNode,
+                  customRequestFocus: _fiscPowerFocusNode,
+                  onValueChanged: (value) {
+                    setState(() {
+                      din = int.parse(value);
+                    });
+                  },
+                ),
                 const SizedBox(height: 10),
                 CustomField(
-                    context: context,
-                    customLabel: "Puissance fiscale",
-                    customHintText: "Saisir puissance fiscale",
-                    customFocus: _fiscPowerFocusNode,
-                    customRequestFocus: _colorFocusNode),
+                  context: context,
+                  customLabel: "Puissance fiscale",
+                  customHintText: "Saisir puissance fiscale",
+                  customFocus: _fiscPowerFocusNode,
+                  customRequestFocus: _colorFocusNode,
+                  onValueChanged: (value) {
+                    setState(() {
+                      fiscPower = int.parse(value);
+                    });
+                  },
+                ),
                 const SizedBox(height: 10),
                 CustomField(
-                    context: context,
-                    customLabel: "Couleur",
-                    customHintText: "Saisir la couleur principale",
-                    customFocus: _colorFocusNode,
-                    customRequestFocus: _colorFocusNode),
+                  context: context,
+                  customLabel: "Couleur",
+                  customHintText: "Saisir la couleur principale",
+                  customFocus: _colorFocusNode,
+                  customRequestFocus: _colorFocusNode,
+                  onValueChanged: (value) {
+                    setState(() {
+                      color = value;
+                    });
+                  },
+                ),
                 const SizedBox(height: 10),
                 const RadioDoor(),
                 const RadioGearbox(),
                 const RadioFuel(),
+                SwitchOption(
+                    nameOption: "Vitre électrique avant",
+                    onChanged: (value) {
+                      setState(() {
+                        vitreAvant = value;
+                      });
+                    }),
+                SwitchOption(
+                    nameOption: "Vitre électrique arrière",
+                    onChanged: (value) {
+                      setState(() {
+                        vitreArriere = value;
+                      });
+                    }),
+
                 ElevatedButton.icon(
                   icon: const Icon(Icons.task_alt),
                   onPressed: () {
@@ -148,8 +217,26 @@ class FormCaracteristicState extends State<FormCaracteristic> {
   }
 
   void submit() {
+    debugPrint("Prix : $price");
+    debugPrint("Marque : $marque");
+    debugPrint("Modèle : $model");
+    debugPrint("année : $year");
+    debugPrint("Kilomètres : $kilometer");
+    debugPrint("Puissance DIN : $din");
+    debugPrint("Puissance fiscale : $fiscPower");
+    debugPrint("Couleur : $color");
+
+    int? selectedDoor =
+        Provider.of<CaracteristicProvider>(context, listen: false).selectedDoor;
+    debugPrint("Nombre de portes : $selectedDoor");
+    String? selectedFuel =
+        Provider.of<CaracteristicProvider>(context, listen: false).selectedFuel;
+    debugPrint("Type de carburant: $selectedFuel");
+    debugPrint("vitre avant : $vitreAvant");
+    debugPrint("vitre arrière : $vitreArriere");
+
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Envoie réussi')),
+      SnackBar(content: Text(vitreArriere ? "vitre électrique arrière" : "")),
     );
   }
 }
