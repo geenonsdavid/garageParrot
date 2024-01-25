@@ -4,6 +4,7 @@ import 'package:garage_parrot/components/radio_door.dart';
 import 'package:garage_parrot/components/radio_fuel.dart';
 import 'package:garage_parrot/components/radio_gearbox.dart';
 import 'package:garage_parrot/components/switch_option.dart';
+import 'package:garage_parrot/list_options.dart';
 import 'package:garage_parrot/providers/caracteristic_provider.dart';
 import 'package:garage_parrot/themes/colors.dart';
 import 'package:provider/provider.dart';
@@ -48,6 +49,9 @@ class FormCaracteristicState extends State<FormCaracteristic> {
   final _dinFocusNode = FocusNode();
   final _fiscPowerFocusNode = FocusNode();
   final _colorFocusNode = FocusNode();
+
+  
+
 //int? selectedDoor = Provider.of<CaracteristicProvider>(context).selectedDoor;
   @override
   Widget build(BuildContext context) {
@@ -184,21 +188,25 @@ class FormCaracteristicState extends State<FormCaracteristic> {
                 const RadioDoor(),
                 const RadioGearbox(),
                 const RadioFuel(),
-                SwitchOption(
-                    nameOption: "Vitre électrique avant",
-                    onChanged: (value) {
-                      setState(() {
-                        vitreAvant = value;
-                      });
-                    }),
-                SwitchOption(
-                    nameOption: "Vitre électrique arrière",
-                    onChanged: (value) {
-                      setState(() {
-                        vitreArriere = value;
-                      });
-                    }),
-
+                
+                Column(
+                  children: switchOptionsData.map((option) {
+                    return Row(
+                      children: [
+                        //Text(option["name"]),
+                        SwitchOption(
+                          nameOption: option["name"],
+                          onChanged: (value) {
+                            // Mettez à jour la valeur dans votre liste de données
+                            setState(() {
+                              option["value"] = value;
+                            });
+                          },
+                        ),
+                      ],
+                    );
+                  }).toList(),
+                ),
                 ElevatedButton.icon(
                   icon: const Icon(Icons.task_alt),
                   onPressed: () {
@@ -227,19 +235,27 @@ class FormCaracteristicState extends State<FormCaracteristic> {
     debugPrint("Puissance fiscale : $fiscPower");
     debugPrint("Couleur : $color");
 
+    // affiche nombre de porte
     int? selectedDoor =
         Provider.of<CaracteristicProvider>(context, listen: false).selectedDoor;
     debugPrint("Nombre de portes : $selectedDoor");
 
     // afficher type de boite
     String? selectedGearbox =
-        Provider.of<CaracteristicProvider>(context, listen: false).selectedGearbox;
+        Provider.of<CaracteristicProvider>(context, listen: false)
+            .selectedGearbox;
     debugPrint("Type de boite : $selectedGearbox");
+    // affiche type de carburant
     String? selectedFuel =
         Provider.of<CaracteristicProvider>(context, listen: false).selectedFuel;
     debugPrint("Type de carburant: $selectedFuel");
-    debugPrint("vitre avant : $vitreAvant");
-    debugPrint("vitre arrière : $vitreArriere");
+    
+    // boucle affichant toutes les options
+    for (var option in switchOptionsData) {
+  debugPrint("${option["name"]} : ${option["value"]? "oui" : "non"}");
+}
+
+
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text(vitreArriere ? "vitre électrique arrière" : "")),
