@@ -2,17 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:garage_parrot/components/footer.dart';
 import 'package:garage_parrot/components/header.dart';
 
-
-class ShopView extends StatefulWidget {
-  const ShopView({super.key, required this.title});
+class AdminView extends StatefulWidget {
+  const AdminView({super.key, required this.title});
 
   final String title;
 
   @override
-  State<ShopView> createState() => _ShopViewState();
+  State<AdminView> createState() => _AdminViewState();
 }
 
-class _ShopViewState extends State<ShopView> {
+class _AdminViewState extends State<AdminView> {
   @override
   Widget build(BuildContext context) {
     const isAdmin = false;
@@ -31,7 +30,7 @@ class _ShopViewState extends State<ShopView> {
       appBar: Header(title: widget.title, isScreenPhone: isScreenPhone),
       body: ListView(
         children: [
-          const Text('Galerie'),
+          const Text('Admin'),
 
           // Widget pour afficher le pied de page
           Footer(isScreenPhone: isScreenPhone),
