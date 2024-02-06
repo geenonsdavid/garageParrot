@@ -15,7 +15,6 @@ class ShopView extends StatefulWidget {
 class _ShopViewState extends State<ShopView> {
   @override
   Widget build(BuildContext context) {
-    const isAdmin = false;
     final currentWidth = MediaQuery.of(context).size.width;
     bool isScreenPhone;
 

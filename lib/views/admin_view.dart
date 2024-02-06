@@ -14,7 +14,6 @@ class AdminView extends StatefulWidget {
 class _AdminViewState extends State<AdminView> {
   @override
   Widget build(BuildContext context) {
-    const isAdmin = false;
     final currentWidth = MediaQuery.of(context).size.width;
     bool isScreenPhone;
 
