@@ -1,15 +1,12 @@
 import "package:flutter/material.dart";
 import "package:flutter_svg/svg.dart";
+import "package:garage_parrot/components/build_nav_button.dart";
 import "package:garage_parrot/themes/colors.dart";
 
 import '../homepage.dart';
 
 class Header extends StatelessWidget implements PreferredSizeWidget {
-  const Header({
-    super.key,
-    required this.widget,
-    required this.isScreenPhone
-  });
+  const Header({super.key, required this.widget, required this.isScreenPhone});
 
   final HomePage widget;
   final bool isScreenPhone;
@@ -18,10 +15,10 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
   // height of header
   Size get preferredSize => const Size.fromHeight(152);
 
+
+
   @override
   Widget build(BuildContext context) {
-    
-
     return Container(
       color: primary,
       child: Column(
@@ -33,13 +30,14 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
             ),
             //navBar
             child: SizedBox(
-              height: isScreenPhone ? 30 : 0,
+              height: isScreenPhone ? 20 : 8,
               width: double.infinity,
             ),
           ),
           // title section
           Padding(
-            padding: const EdgeInsets.only(left: 8.0,top:0,right: 8,bottom: 4),
+            padding:
+                const EdgeInsets.only(left: 8.0, top: 0, right: 8, bottom: 4),
             child: DecoratedBox(
               decoration: const BoxDecoration(color: primary),
               child: Row(
@@ -50,7 +48,8 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
                     height: isScreenPhone ? 50 : 100,
                     width: isScreenPhone ? 50 : 100,
                   ),
-                  Text(widget.title, style: Theme.of(context).textTheme.headlineLarge),
+                  Text(widget.title,
+                      style: Theme.of(context).textTheme.headlineLarge),
                   Row(
                     children: [
                       // button connexion
@@ -58,14 +57,15 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
                         onPressed: () {},
                         icon: SvgPicture.asset(
                           'assets/icons/power-off-solid.svg',
-                          colorFilter:
-                              const ColorFilter.mode(secondary, BlendMode.srcIn),
+                          colorFilter: const ColorFilter.mode(
+                              secondary, BlendMode.srcIn),
                         ),
                       ),
                       isScreenPhone
                           ? const SizedBox.shrink()
                           : Text('Connexion',
-                              style: Theme.of(context).textTheme.headlineMedium),
+                              style:
+                                  Theme.of(context).textTheme.headlineMedium),
                     ],
                   ),
                 ],
@@ -74,7 +74,8 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
           ),
           // nav buttons
           Padding(
-            padding: const EdgeInsets.only(left: 8.0,top:4,right: 8,bottom: 4),
+            padding:
+                const EdgeInsets.only(left: 8.0, top: 4, right: 8, bottom: 4),
             child: DecoratedBox(
               decoration: const BoxDecoration(
                 color: primary,
@@ -83,96 +84,19 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   // Accueil
-                  isScreenPhone ?
-                  Column(
-                    children: [
-                      SvgPicture.asset(
-                        'assets/icons/house-solid.svg',
-                        height: 30,
-                        width: 30,
-                        colorFilter: const ColorFilter.mode(
-                            secondary, BlendMode.srcIn),
-                      ),
-
-                      Text('Accueil', style: Theme.of(context).textTheme.headlineMedium),
-                    ],
-                  ):
-                  Row(
-                    children: [
-                      SvgPicture.asset(
-                        'assets/icons/house-solid.svg',
-                        height: 30,
-                        width: 30,
-                        colorFilter: const ColorFilter.mode(
-                            secondary, BlendMode.srcIn),
-                      ),
-
-                      Text('Accueil', style: Theme.of(context).textTheme.headlineMedium),
-                    ],
-                  ),
+                  buildNavButton(
+                      'assets/icons/house-solid.svg', 'Accueil',isScreenPhone, context),
                   // Galerie
-                  isScreenPhone ?
-                  Column(
-                    children: [
-                      SvgPicture.asset(
-                        'assets/icons/car-on-solid.svg',
-                        height: 30,
-                        width: 30,
-                        colorFilter: const ColorFilter.mode(
-                            secondary, BlendMode.srcIn),
-                      ),
-
-                      Text('Galerie', style: Theme.of(context).textTheme.headlineMedium),
-                    ],
-                  ):
-                  Row(
-                    children: [
-                      SvgPicture.asset(
-                        'assets/icons/car-on-solid.svg',
-                        height: 30,
-                        width: 30,
-                        colorFilter: const ColorFilter.mode(
-                            secondary, BlendMode.srcIn),
-                      ),
-
-                      Text('Galerie', style: Theme.of(context).textTheme.headlineMedium),
-                    ],
-                  ),
-                  // Admin
-                  isScreenPhone ?
-                  Column(
-                    children: [
-                      SvgPicture.asset(
-                        'assets/icons/admin.svg',
-                        height: 30,
-                        width: 30,
-                        colorFilter: const ColorFilter.mode(
-                            secondary, BlendMode.srcIn),
-                      ),
-
-                      Text('Administrateur', style: Theme.of(context).textTheme.headlineMedium),
-                    ],
-                  ):
-                  Row(
-                    children: [
-                      SvgPicture.asset(
-                        'assets/icons/admin.svg',
-                        height: 30,
-                        width: 30,
-                        colorFilter: const ColorFilter.mode(
-                            secondary, BlendMode.srcIn),
-                      ),
-
-                      Text('Administrateur', style: Theme.of(context).textTheme.headlineMedium),
-                    ],
-                  ),
+                  buildNavButton(
+                      'assets/icons/car-on-solid.svg', 'Galerie',isScreenPhone, context),
+                  buildNavButton(
+                      'assets/icons/admin.svg', 'Administrateur', isScreenPhone, context),
                 ],
               ),
             ),
-          )
+          ),
         ],
       ),
     );
-
   }
 }
