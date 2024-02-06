@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:garage_parrot/components/footer.dart';
 import 'package:garage_parrot/components/list_services_view.dart';
-import 'components/header.dart';
+import '../components/header.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key, required this.title});
+  const HomePage({
+    super.key,
+    required this.title});
 
   final String title;
 
@@ -28,13 +30,13 @@ class _HomePageState extends State<HomePage> {
 
     
     return Scaffold(
-      appBar: Header(widget: widget, isScreenPhone: isScreenPhone),
+      appBar: Header(title: widget.title, isScreenPhone: isScreenPhone),
       body: ListView(
         children: [
           ListServicesView(isScreenPhone: isScreenPhone, isAdmin: isAdmin),
 
           // Widget pour afficher le pied de page
-          Footer(widget: widget, isScreenPhone: isScreenPhone),
+          Footer(isScreenPhone: isScreenPhone),
 
           // Bouton d'action flottant
           FloatingActionButton(
