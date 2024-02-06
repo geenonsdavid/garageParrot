@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:garage_parrot/homepage.dart';
+import 'package:garage_parrot/views/homepage.dart';
 import 'package:garage_parrot/themes/theme.dart';
 
 void main() {
