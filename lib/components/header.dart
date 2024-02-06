@@ -3,23 +3,21 @@ import "package:flutter_svg/svg.dart";
 import "package:garage_parrot/components/build_nav_button.dart";
 import "package:garage_parrot/themes/colors.dart";
 
-import '../homepage.dart';
-
 class Header extends StatelessWidget implements PreferredSizeWidget {
   const Header({
     super.key,
-    required this.widget,
+    required this.title,
     required this.isScreenPhone,
-    });
+    this.onLogoutPressed,
+  });
 
-  final HomePage widget;
+  final String title;
   final bool isScreenPhone;
+  final VoidCallback? onLogoutPressed;
 
   @override
   // height of header
   Size get preferredSize => const Size.fromHeight(152);
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +42,7 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
                   height: isScreenPhone ? 50 : 100,
                   width: isScreenPhone ? 50 : 100,
                 ),
-                Text(widget.title,
+                Text(title,
                     style: Theme.of(context).textTheme.headlineLarge),
                 Row(
                   children: [
@@ -56,12 +54,12 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
                       icon: SvgPicture.asset(
                         'assets/icons/power-off-solid.svg',
                         colorFilter: const ColorFilter.mode(
-                            secondary,
-                            BlendMode.srcIn,
-                            ),
+                          secondary,
+                          BlendMode.srcIn,
+                        ),
                       ),
                     ),
-                  if (!isScreenPhone)
+                    if (!isScreenPhone)
                       Text(
                         'Connexion',
                         style: Theme.of(context).textTheme.headlineMedium,
@@ -84,24 +82,24 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
                 children: [
                   // Accueil
                   buildNavButton(
-                      'assets/icons/house-solid.svg',
-                      'Accueil',
-                      isScreenPhone,
-                      context,
-                      ),
+                    'assets/icons/house-solid.svg',
+                    'Accueil',
+                    isScreenPhone,
+                    context,
+                  ),
                   // Galerie
                   buildNavButton(
-                      'assets/icons/car-on-solid.svg',
-                      'Galerie',
-                      isScreenPhone,
-                      context,
-                      ),
+                    'assets/icons/car-on-solid.svg',
+                    'Galerie',
+                    isScreenPhone,
+                    context,
+                  ),
                   buildNavButton(
-                      'assets/icons/admin.svg',
-                      'Administrateur',
-                      isScreenPhone,
-                      context,
-                      ),
+                    'assets/icons/admin.svg',
+                    'Administrateur',
+                    isScreenPhone,
+                    context,
+                  ),
                 ],
               ),
             ),
