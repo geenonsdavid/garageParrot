@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:garage_parrot/components/footer.dart';
+import 'package:garage_parrot/components/list_services_view.dart';
 import 'components/header.dart';
 
 class HomePage extends StatefulWidget {
@@ -14,29 +15,37 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+    const isAdmin = false;
     final currentWidth = MediaQuery.of(context).size.width;
     bool isScreenPhone;
-    // responsive logo
+
+    // Responsivité : détermine si l'écran est un téléphone
     if (currentWidth < 480) {
       isScreenPhone = true;
     } else {
       isScreenPhone = false;
     }
+
+    
     return Scaffold(
-      appBar: Header(widget: widget,isScreenPhone: isScreenPhone),
+      appBar: Header(widget: widget, isScreenPhone: isScreenPhone),
       body: ListView(
         children: [
+          ListServicesView(isScreenPhone: isScreenPhone, isAdmin: isAdmin),
 
-          const Text('boby'),
+          // Widget pour afficher le pied de page
           Footer(widget: widget, isScreenPhone: isScreenPhone),
+
+          // Bouton d'action flottant
           FloatingActionButton(
             child: const Icon(Icons.abc),
-            onPressed: (){},
+            onPressed: () {},
           ),
         ],
       ),
     );
   }
 }
+
 
 
