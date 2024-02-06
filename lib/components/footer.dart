@@ -2,19 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:garage_parrot/components/formcontact.dart';
 import 'package:garage_parrot/components/line.dart';
 import 'package:garage_parrot/components/timesopen.dart';
-import 'package:garage_parrot/homepage.dart';
 import 'package:garage_parrot/themes/colors.dart';
-
 import 'phone_number.dart';
 
 class Footer extends StatelessWidget {
   const Footer({
     super.key,
-    required this.widget,
     required this.isScreenPhone,
   });
 
-  final HomePage widget;
   final bool isScreenPhone;
 
   @override
