@@ -6,7 +6,11 @@ import "package:garage_parrot/themes/colors.dart";
 import '../homepage.dart';
 
 class Header extends StatelessWidget implements PreferredSizeWidget {
-  const Header({super.key, required this.widget, required this.isScreenPhone});
+  const Header({
+    super.key,
+    required this.widget,
+    required this.isScreenPhone,
+    });
 
   final HomePage widget;
   final bool isScreenPhone;
@@ -24,52 +28,47 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
       child: Column(
         children: [
           //SizeBox
-          DecoratedBox(
-            decoration: const BoxDecoration(
-              color: primary,
-            ),
-            //navBar
-            child: SizedBox(
-              height: isScreenPhone ? 20 : 8,
-              width: double.infinity,
-            ),
+          SizedBox(
+            height: isScreenPhone ? 20 : 8,
+            width: double.infinity,
           ),
           // title section
           Padding(
             padding:
                 const EdgeInsets.only(left: 8.0, top: 0, right: 8, bottom: 4),
-            child: DecoratedBox(
-              decoration: const BoxDecoration(color: primary),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Image.asset(
-                    'assets/logo_garage_parrot.png',
-                    height: isScreenPhone ? 50 : 100,
-                    width: isScreenPhone ? 50 : 100,
-                  ),
-                  Text(widget.title,
-                      style: Theme.of(context).textTheme.headlineLarge),
-                  Row(
-                    children: [
-                      // button connexion
-                      IconButton(
-                        onPressed: () {},
-                        icon: SvgPicture.asset(
-                          'assets/icons/power-off-solid.svg',
-                          colorFilter: const ColorFilter.mode(
-                              secondary, BlendMode.srcIn),
-                        ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Image.asset(
+                  'assets/logo_garage_parrot.png',
+                  height: isScreenPhone ? 50 : 100,
+                  width: isScreenPhone ? 50 : 100,
+                ),
+                Text(widget.title,
+                    style: Theme.of(context).textTheme.headlineLarge),
+                Row(
+                  children: [
+                    // button connexion
+                    IconButton(
+                      onPressed: () {
+                        //gérer l'évévement du bouton
+                      },
+                      icon: SvgPicture.asset(
+                        'assets/icons/power-off-solid.svg',
+                        colorFilter: const ColorFilter.mode(
+                            secondary,
+                            BlendMode.srcIn,
+                            ),
                       ),
-                      isScreenPhone
-                          ? const SizedBox.shrink()
-                          : Text('Connexion',
-                              style:
-                                  Theme.of(context).textTheme.headlineMedium),
-                    ],
-                  ),
-                ],
-              ),
+                    ),
+                  if (!isScreenPhone)
+                      Text(
+                        'Connexion',
+                        style: Theme.of(context).textTheme.headlineMedium,
+                      ),
+                  ],
+                ),
+              ],
             ),
           ),
           // nav buttons
@@ -85,12 +84,24 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
                 children: [
                   // Accueil
                   buildNavButton(
-                      'assets/icons/house-solid.svg', 'Accueil',isScreenPhone, context),
+                      'assets/icons/house-solid.svg',
+                      'Accueil',
+                      isScreenPhone,
+                      context,
+                      ),
                   // Galerie
                   buildNavButton(
-                      'assets/icons/car-on-solid.svg', 'Galerie',isScreenPhone, context),
+                      'assets/icons/car-on-solid.svg',
+                      'Galerie',
+                      isScreenPhone,
+                      context,
+                      ),
                   buildNavButton(
-                      'assets/icons/admin.svg', 'Administrateur', isScreenPhone, context),
+                      'assets/icons/admin.svg',
+                      'Administrateur',
+                      isScreenPhone,
+                      context,
+                      ),
                 ],
               ),
             ),
