@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:garage_parrot/components/car.dart';
 import 'package:garage_parrot/components/footer.dart';
 import 'package:garage_parrot/components/header.dart';
 
@@ -30,18 +31,31 @@ class _ShopViewState extends State<ShopView> {
       appBar: Header(title: widget.title, isScreenPhone: isScreenPhone),
       body: ListView(
         children: [
-          const Text('Galerie'),
+            Center(
+              child: Container(
+                constraints: const BoxConstraints(maxWidth: 310),
+                width: 310,
+                child: const Car(
+                marque:'Citroen',
+                type: 'C5',
+                cylinder: 2.1,
+                power: 110,
+                year:2024,
+                km:125000,
+                transmission: "Automatique",
+                fuel: "Diesel",
+                price: 135000
+                        ),
+              ),
+            ),
 
           // Widget pour afficher le pied de page
           Footer(isScreenPhone: isScreenPhone),
 
-          // Bouton d'action flottant
-          FloatingActionButton(
-            child: const Icon(Icons.abc),
-            onPressed: () {},
-          ),
+          
         ],
       ),
+      
     );
   }
 }
