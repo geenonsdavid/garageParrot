@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:garage_parrot/components/footer.dart';
+import 'package:garage_parrot/components/form_valid_comment.dart';
 import 'package:garage_parrot/components/header.dart';
 
 class AdminView extends StatefulWidget {
@@ -24,12 +25,17 @@ class _AdminViewState extends State<AdminView> {
       isScreenPhone = false;
     }
 
-    
     return Scaffold(
       appBar: Header(title: widget.title, isScreenPhone: isScreenPhone),
       body: ListView(
         children: [
-          const Text('Admin'),
+          Center(
+            child: Text(
+              'Liste des avis',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+          ),
+          const FormValidComment(),
 
           // Widget pour afficher le pied de page
           Footer(isScreenPhone: isScreenPhone),
@@ -44,6 +50,3 @@ class _AdminViewState extends State<AdminView> {
     );
   }
 }
-
-
-
