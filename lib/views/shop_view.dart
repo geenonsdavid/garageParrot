@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:garage_parrot/components/car.dart';
 import 'package:garage_parrot/components/footer.dart';
 import 'package:garage_parrot/components/header.dart';
-
+import 'package:garage_parrot/views/list_cars_view.dart';
 
 class ShopView extends StatefulWidget {
   const ShopView({super.key, required this.title});
@@ -18,7 +17,7 @@ class _ShopViewState extends State<ShopView> {
   Widget build(BuildContext context) {
     final currentWidth = MediaQuery.of(context).size.width;
     bool isScreenPhone;
-
+    bool isAdmin = true;
     // Responsivité : détermine si l'écran est un téléphone
     if (currentWidth < 480) {
       isScreenPhone = true;
@@ -26,39 +25,14 @@ class _ShopViewState extends State<ShopView> {
       isScreenPhone = false;
     }
 
-    
     return Scaffold(
       appBar: Header(title: widget.title, isScreenPhone: isScreenPhone),
       body: ListView(
         children: [
-            Center(
-              child: Container(
-                constraints: const BoxConstraints(maxWidth: 310),
-                width: 310,
-                child: const Car(
-                marque:'Citroen',
-                type: 'C5',
-                cylinder: 2.1,
-                power: 110,
-                year:2024,
-                km:125000,
-                transmission: "Automatique",
-                fuel: "Diesel",
-                price: 135000
-                        ),
-              ),
-            ),
-
-          // Widget pour afficher le pied de page
-          Footer(isScreenPhone: isScreenPhone),
-
-          
+          ListCarsView(isScreenPhone: isScreenPhone, isAdmin: isAdmin),
+          Footer(isScreenPhone: isScreenPhone)
         ],
       ),
-      
     );
   }
 }
-
-
-
