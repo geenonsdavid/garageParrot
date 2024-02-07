@@ -5,6 +5,7 @@ import 'package:garage_parrot/themes/colors.dart';
 class Car extends StatelessWidget {
   const Car({
     Key? key,
+    required this.image,
     required this.marque,
     required this.type,
     required this.cylinder,
@@ -25,13 +26,14 @@ class Car extends StatelessWidget {
   final String transmission;
   final String fuel;
   final int price;
+  final String image;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       constraints: const BoxConstraints(
-        //maxWidth: 330,
-      ),
+          //maxWidth: 330,
+          ),
       decoration: BoxDecoration(
         color: primary,
         border: Border.all(
@@ -46,7 +48,7 @@ class Car extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(8),
             child: Image.asset(
-              '../assets/cars/car1.jpg',
+              image,
               width: 200,
             ),
           ),
@@ -113,37 +115,48 @@ class Car extends StatelessWidget {
                       Text(transmission,
                           style: Theme.of(context).textTheme.bodyLarge),
                       const Text("-"),
-                      Text(fuel,
-                          style: Theme.of(context).textTheme.bodyLarge),
+                      Text(fuel, style: Theme.of(context).textTheme.bodyLarge),
                     ],
                   ),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("$price €", style:Theme.of(context).textTheme.headlineMedium?.copyWith(
-                      color: Colors.black,
-                    )),
+                    Text("$price €",
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineMedium
+                            ?.copyWith(
+                              color: Colors.black,
+                            )),
                   ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     ElevatedButton.icon(
-                      onPressed: (){},
+                      onPressed: () {},
                       label: const Text("Details"),
                       icon: SvgPicture.asset(
                         "../assets/icons/wrench-solid.svg",
                         height: 20,
-                        colorFilter: const ColorFilter.mode(secondary, BlendMode.srcIn),
-                        ),
+                        colorFilter:
+                            const ColorFilter.mode(secondary, BlendMode.srcIn),
                       ),
-                      const SizedBox(width: 8,),
+                    ),
+                    const SizedBox(
+                      width: 8,
+                    ),
                     ElevatedButton.icon(
-                      onPressed: (){},
+                      onPressed: () {},
                       label: const Text("Contactez-nous"),
-                      icon: const Icon(Icons.ac_unit_outlined),
+                      icon: SvgPicture.asset(
+                        "../assets/icons/send-fill.svg",
+                        height: 20,
+                        colorFilter:
+                            const ColorFilter.mode(secondary, BlendMode.srcIn),
                       ),
+                    ),
                   ],
                 )
               ],
