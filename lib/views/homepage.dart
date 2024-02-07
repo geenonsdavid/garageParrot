@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:garage_parrot/components/footer.dart';
-import 'package:garage_parrot/components/list_services_view.dart';
+import 'package:garage_parrot/views/list_services_view.dart';
 import '../components/header.dart';
 
 class HomePage extends StatefulWidget {
