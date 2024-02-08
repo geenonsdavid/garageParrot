@@ -1,6 +1,6 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+/// Widget personnalisé pour un champ de texte avec étiquette et indication.
 class CustomField extends StatelessWidget {
   const CustomField({
     super.key,
@@ -9,6 +9,7 @@ class CustomField extends StatelessWidget {
     required this.customHintText,
     required this.customFocus,
     required this.customRequestFocus,
+    required this.onValueChanged, // ajout de la fonction de rappel
     this.maxLines = 1,
   });
 
@@ -17,6 +18,7 @@ class CustomField extends StatelessWidget {
   final String customHintText;
   final FocusNode customFocus;
   final FocusNode customRequestFocus;
+  final ValueChanged<String> onValueChanged; // Callback
   final int maxLines;
 
   @override
@@ -41,11 +43,7 @@ class CustomField extends StatelessWidget {
       },
 
       // enregistre la valeur
-      onChanged: (value) {
-        if (kDebugMode) {
-          print(value);
-        } // Assign the value to the variable
-      },
+      onChanged: onValueChanged,
       // permet de passer au champ de texte suivant
       onFieldSubmitted: (value) {
         FocusScope.of(context).requestFocus(customRequestFocus);
