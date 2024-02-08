@@ -4,6 +4,7 @@ import 'package:garage_parrot/components/form_add_service.dart';
 import 'package:garage_parrot/components/form_valid_comment.dart';
 import 'package:garage_parrot/components/header.dart';
 import 'package:garage_parrot/components/line.dart';
+import 'package:garage_parrot/views/list_services_view.dart';
 
 class AdminView extends StatefulWidget {
   const AdminView({super.key, required this.title});
@@ -15,11 +16,11 @@ class AdminView extends StatefulWidget {
 }
 
 class _AdminViewState extends State<AdminView> {
-
   @override
   Widget build(BuildContext context) {
     final currentWidth = MediaQuery.of(context).size.width;
     bool isScreenPhone;
+    bool isAdmin = true;
 
     // Responsivité : détermine si l'écran est un téléphone
     if (currentWidth < 480) {
@@ -28,7 +29,6 @@ class _AdminViewState extends State<AdminView> {
       isScreenPhone = false;
     }
 
-    
     return Scaffold(
       appBar: Header(title: widget.title, isScreenPhone: isScreenPhone),
       body: ListView(
@@ -48,6 +48,7 @@ class _AdminViewState extends State<AdminView> {
             ),
           ),
           const FormAddService(),
+          ListServicesView(isScreenPhone: isScreenPhone, isAdmin: isAdmin),
 
           // Widget pour afficher le pied de page
           Footer(isScreenPhone: isScreenPhone),
