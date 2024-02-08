@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:garage_parrot/components/footer.dart';
+import 'package:garage_parrot/components/form_add_service.dart';
 import 'package:garage_parrot/components/form_valid_comment.dart';
 import 'package:garage_parrot/components/header.dart';
+import 'package:garage_parrot/components/line.dart';
 
 class AdminView extends StatefulWidget {
   const AdminView({super.key, required this.title});
@@ -13,6 +15,7 @@ class AdminView extends StatefulWidget {
 }
 
 class _AdminViewState extends State<AdminView> {
+
   @override
   Widget build(BuildContext context) {
     final currentWidth = MediaQuery.of(context).size.width;
@@ -25,6 +28,7 @@ class _AdminViewState extends State<AdminView> {
       isScreenPhone = false;
     }
 
+    
     return Scaffold(
       appBar: Header(title: widget.title, isScreenPhone: isScreenPhone),
       body: ListView(
@@ -36,15 +40,17 @@ class _AdminViewState extends State<AdminView> {
             ),
           ),
           const FormValidComment(),
+          const Line(),
+          Center(
+            child: Text(
+              'Ajoutez / Modifiez un service',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+          ),
+          const FormAddService(),
 
           // Widget pour afficher le pied de page
           Footer(isScreenPhone: isScreenPhone),
-
-          // Bouton d'action flottant
-          FloatingActionButton(
-            child: const Icon(Icons.abc),
-            onPressed: () {},
-          ),
         ],
       ),
     );
