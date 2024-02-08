@@ -63,28 +63,43 @@ class FormContactState extends State<FormContact> {
                     customLabel: "nom",
                     customHintText: "Veuillez entrer votre nom",
                     customFocus: _nameFocusNode,
-                    customRequestFocus: _lastnameFocusNode),
+                    customRequestFocus: _lastnameFocusNode,
+                    onValueChanged: (value) {
+                    // stock data
+                    
+                  },),
                 const SizedBox(height: 10),
                 CustomField(
                     context: context,
                     customLabel: "Prénom",
                     customHintText: "Veuillez entrer votre prénom",
                     customFocus: _lastnameFocusNode,
-                    customRequestFocus: _emailFocusNode),
+                    customRequestFocus: _emailFocusNode,
+                    onValueChanged: (value) {
+                    // stock data
+                  },
+                    ),
                 const SizedBox(height: 10),
                 CustomField(
                     context: context,
                     customLabel: "Email",
                     customHintText: "Veuillez entrer votre email",
                     customFocus: _emailFocusNode,
-                    customRequestFocus: _phoneFocusNode),
+                    customRequestFocus: _phoneFocusNode,
+                    onValueChanged: (value) {
+                    // stock data
+                  },
+                    ),
                 const SizedBox(height: 10),
                 CustomField(
                     context: context,
                     customLabel: "Téléphone",
                     customHintText: "Veuillez entrer votre téléphone",
                     customFocus: _phoneFocusNode,
-                    customRequestFocus: _messageFocusNode),
+                    customRequestFocus: _messageFocusNode,
+                    onValueChanged: (value) {
+                    // stock data
+                  },),
                 const SizedBox(height: 10),
                 CustomField(
                     context: context,
@@ -93,6 +108,9 @@ class FormContactState extends State<FormContact> {
                     customFocus: _messageFocusNode,
                     customRequestFocus: _messageFocusNode,
                     maxLines: 4,
+                    onValueChanged: (value) {
+                    // stock data
+                  },
                     ),
                 const SizedBox(height: 10),
                 ElevatedButton.icon(
