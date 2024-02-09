@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:garage_parrot/components/customfield.dart';
 import 'package:garage_parrot/components/radio_door.dart';
@@ -5,9 +8,10 @@ import 'package:garage_parrot/components/radio_fuel.dart';
 import 'package:garage_parrot/components/radio_gearbox.dart';
 import 'package:garage_parrot/components/switch_option.dart';
 import 'package:garage_parrot/list_options.dart';
-import 'package:garage_parrot/providers/caracteristic_provider.dart';
+import 'package:garage_parrot/models/list_cars.dart';
+//import 'package:garage_parrot/providers/caracteristic_provider.dart';
 import 'package:garage_parrot/themes/colors.dart';
-import 'package:provider/provider.dart';
+//import 'package:provider/provider.dart';
 
 // Define a custom Form widget.
 class FormCaracteristic extends StatefulWidget {
@@ -22,11 +26,42 @@ class FormCaracteristic extends StatefulWidget {
 // Define a corresponding State class.
 // This class holds data related to the form.
 class FormCaracteristicState extends State<FormCaracteristic> {
-  // Create a global key that uniquely identifies the Form widget
-  // and allows validation of the form.
-  //
-  // Note: This is a `GlobalKey<FormState>`,
-  // not a GlobalKey<MyCustomFormState>.
+  List<Caracteristique> listCar = [];
+
+  @override
+  void initState() {
+    super.initState();
+    loadListCar();
+  }
+
+  void loadListCar() {
+    // Charger la liste de voitures depuis le fichier JSON, si elle existe
+    try {
+      final file = File('list_car.json');
+      if (file.existsSync()) {
+        final jsonContent = file.readAsStringSync();
+        final jsonData = json.decode(jsonContent);
+        if (jsonData is List) {
+          listCar =
+              jsonData.map((data) => Caracteristique.fromJson(data)).toList();
+        }
+      }
+    } catch (e) {
+      print("Erreur lors du chargement de la liste de voitures : $e");
+    }
+  }
+
+  void saveListCar() {
+    // Enregistrer la liste de voitures dans le fichier JSON
+    try {
+      final file = File('list_car.json');
+      final jsonData = listCar.map((car) => car.toJson()).toList();
+      file.writeAsStringSync(json.encode(jsonData));
+    } catch (e) {
+      print("Erreur lors de l'enregistrement de la liste de voitures : $e");
+    }
+  }
+
   double? price;
   String marque = "";
   String model = "";
@@ -50,9 +85,6 @@ class FormCaracteristicState extends State<FormCaracteristic> {
   final _fiscPowerFocusNode = FocusNode();
   final _colorFocusNode = FocusNode();
 
-  
-
-//int? selectedDoor = Provider.of<CaracteristicProvider>(context).selectedDoor;
   @override
   Widget build(BuildContext context) {
     // Build a Form widget using the _formKey created above.
@@ -64,7 +96,8 @@ class FormCaracteristicState extends State<FormCaracteristic> {
           border: Border.all(
             width: 1,
             color: secondary,
-          )),
+          ),
+          ),
       padding: const EdgeInsets.all(8),
       constraints: const BoxConstraints(maxWidth: 300),
       child: Column(
@@ -188,7 +221,7 @@ class FormCaracteristicState extends State<FormCaracteristic> {
                 const RadioDoor(),
                 const RadioGearbox(),
                 const RadioFuel(),
-                
+
                 Column(
                   children: switchOptionsData.map((option) {
                     return Row(
@@ -226,39 +259,55 @@ class FormCaracteristicState extends State<FormCaracteristic> {
   }
 
   void submit() {
-    debugPrint("Prix : $price");
-    debugPrint("Marque : $marque");
-    debugPrint("Modèle : $model");
-    debugPrint("année : $year");
-    debugPrint("Kilomètres : $kilometer");
-    debugPrint("Puissance DIN : $din");
-    debugPrint("Puissance fiscale : $fiscPower");
-    debugPrint("Couleur : $color");
+    // Ajouter une nouvelle instance de Caracteristique à la liste
+    Caracteristique newCar = Caracteristique(
+      price: price,
+      marque: marque,
+      model: model,
+      year: year,
+      kilometer: kilometer,
+      din: din,
+      fiscPower: fiscPower,
+      color: color,
+      selectedDoor: selectedDoor,
+      selectedGearbox: selectedGearbox,
+      selectedFuel: selectedFuel,
+      //vitreAvant: vitreAvant,
+      //vitreArriere: vitreArriere,
+      switchOptionsData: switchOptionsData,
+    );
+
+    listCar.add(newCar);
+
+    // Enregistrer la liste mise à jour
+    saveListCar();
+
 
     // affiche nombre de porte
-    int? selectedDoor =
-        Provider.of<CaracteristicProvider>(context, listen: false).selectedDoor;
-    debugPrint("Nombre de portes : $selectedDoor");
+    //int? selectedDoor =
+    //    Provider.of<CaracteristicProvider>(context, listen: false).selectedDoor;
+    //debugPrint("Nombre de portes : $selectedDoor");
 
     // afficher type de boite
-    String? selectedGearbox =
-        Provider.of<CaracteristicProvider>(context, listen: false)
-            .selectedGearbox;
-    debugPrint("Type de boite : $selectedGearbox");
+   // String? selectedGearbox =
+    //    Provider.of<CaracteristicProvider>(context, listen: false)
+   //         .selectedGearbox;
+    //debugPrint("Type de boite : $selectedGearbox");
     // affiche type de carburant
-    String? selectedFuel =
-        Provider.of<CaracteristicProvider>(context, listen: false).selectedFuel;
-    debugPrint("Type de carburant: $selectedFuel");
-    
+    //String? selectedFuel =
+    //    Provider.of<CaracteristicProvider>(context, listen: false).selectedFuel;
+    //debugPrint("Type de carburant: $selectedFuel");
+
     // boucle affichant toutes les options
-    for (var option in switchOptionsData) {
-  debugPrint("${option["name"]} : ${option["value"]? "oui" : "non"}");
-}
-
-
+    //for (var option in switchOptionsData) {
+     // debugPrint("${option["name"]} : ${option["value"] ? "oui" : "non"}");
+    //}
+    //;
+    
+    //debugPrint(listCar);
 
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(vitreArriere ? "vitre électrique arrière" : "")),
+      const SnackBar(content: Text("Enregistrement réussi")),
     );
   }
 }
