@@ -1,6 +1,22 @@
 final List<Map<String, dynamic>> switchOptionsData = [
     {"id": 1, "name": "Vitre électrique avant", "option": "Option 1", "value": false},
     {"id": 2, "name": "Vitre électrique arrière", "option": "Option 2", "value": false},
-    {"id": 3, "name": "Climatisation", "option": "Option 3", "value": false},
+    {"id": 3, "name": "Jantes en alliage", "option": "Option 3", "value": false},
+    {"id": 4, "name": "Climatisation", "option": "Option 3", "value": false},
+    {"id": 5, "name": "Aide au parking", "option": "Option 3", "value": false},
+    {"id": 6, "name": "Régulateur de vitesse", "option": "Option 3", "value": false},
+    {"id": 7, "name": "Ordinateur de bord", "option": "Option 3", "value": false},
+    {"id": 8, "name": "Ecran tactile", "option": "Option 3", "value": false},
+    {"id": 9, "name": "USB / Auxiliaire", "option": "Option 3", "value": false},
+    {"id": 10, "name": "GPS", "option": "Option 3", "value": false},
+    {"id": 11, "name": "ABS", "option": "Option 3", "value": false},
+    {"id": 12, "name": "Feux à LED", "option": "Option 3", "value": false},
+    {"id": 13, "name": "Projecteur xenon", "option": "Option 3", "value": false},
+    {"id": 14, "name": "Accoudoir central", "option": "Option 3", "value": false},
+    {"id": 15, "name": "Toit ouvrant", "option": "Option 3", "value": false},
+    {"id": 16, "name": "Toit panoramique", "option": "Option 3", "value": false},
+    {"id": 17, "name": "Sièges en cuir", "option": "Option 3", "value": false},
+    {"id": 18, "name": "Sièges chauffants", "option": "Option 3", "value": false},
+    {"id": 19, "name": "Isofix", "option": "Option 3", "value": false},
     // Ajoutez autant d'options que nécessaire
   ];
