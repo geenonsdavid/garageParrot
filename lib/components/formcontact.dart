@@ -30,12 +30,20 @@ class FormContactState extends State<FormContact> {
   final _phoneFocusNode = FocusNode();
   final _messageFocusNode = FocusNode();
 
+  final _nameController = TextEditingController();
+  final _lastnameController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _phoneController = TextEditingController();
+  final _messageController = TextEditingController();
+
+  
+
   @override
   Widget build(BuildContext context) {
     // Build a Form widget using the _formKey created above.
 
     return Container(
-          decoration: BoxDecoration(
+      decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: const BorderRadius.all(Radius.circular(8)),
           border: Border.all(
@@ -59,59 +67,60 @@ class FormContactState extends State<FormContact> {
               children: <Widget>[
                 // Add TextFormFields and ElevatedButton here.
                 CustomField(
-                    context: context,
-                    customLabel: "nom",
-                    customHintText: "Veuillez entrer votre nom",
-                    customFocus: _nameFocusNode,
-                    customRequestFocus: _lastnameFocusNode,
-                    onValueChanged: (value) {
-                    // stock data
-                    
-                  },),
+                  controller: _nameController,
+                  context: context,
+                  customLabel: "nom",
+                  customHintText: "Veuillez entrer votre nom",
+                  customFocus: _nameFocusNode,
+                  customRequestFocus: _lastnameFocusNode,
+                 
+                  
+                ),
                 const SizedBox(height: 10),
                 CustomField(
-                    context: context,
-                    customLabel: "Prénom",
-                    customHintText: "Veuillez entrer votre prénom",
-                    customFocus: _lastnameFocusNode,
-                    customRequestFocus: _emailFocusNode,
-                    onValueChanged: (value) {
-                    // stock data
-                  },
-                    ),
+                  controller: _lastnameController,
+                  context: context,
+                  customLabel: "Prénom",
+                  customHintText: "Veuillez entrer votre prénom",
+                  customFocus: _lastnameFocusNode,
+                  customRequestFocus: _emailFocusNode,
+                 
+                  
+                ),
                 const SizedBox(height: 10),
                 CustomField(
-                    context: context,
-                    customLabel: "Email",
-                    customHintText: "Veuillez entrer votre email",
-                    customFocus: _emailFocusNode,
-                    customRequestFocus: _phoneFocusNode,
-                    onValueChanged: (value) {
-                    // stock data
-                  },
-                    ),
+                  controller: _emailController,
+                  context: context,
+                  customLabel: "Email",
+                  customHintText: "Veuillez entrer votre email",
+                  customFocus: _emailFocusNode,
+                  customRequestFocus: _phoneFocusNode,
+                 
+                  
+                ),
                 const SizedBox(height: 10),
                 CustomField(
-                    context: context,
-                    customLabel: "Téléphone",
-                    customHintText: "Veuillez entrer votre téléphone",
-                    customFocus: _phoneFocusNode,
-                    customRequestFocus: _messageFocusNode,
-                    onValueChanged: (value) {
-                    // stock data
-                  },),
+                  controller: _phoneController,
+                  context: context,
+                  customLabel: "Téléphone",
+                  customHintText: "Veuillez entrer votre téléphone",
+                  customFocus: _phoneFocusNode,
+                  customRequestFocus: _messageFocusNode,
+                 
+                  
+                ),
                 const SizedBox(height: 10),
                 CustomField(
-                    context: context,
-                    customLabel: "Message",
-                    customHintText: "Veuillez entrer votre message",
-                    customFocus: _messageFocusNode,
-                    customRequestFocus: _messageFocusNode,
-                    maxLines: 4,
-                    onValueChanged: (value) {
-                    // stock data
-                  },
-                    ),
+                  controller: _messageController,
+                  context: context,
+                  customLabel: "Message",
+                  customHintText: "Veuillez entrer votre message",
+                  customFocus: _messageFocusNode,
+                  customRequestFocus: _messageFocusNode,
+                  maxLines: 4,
+                 
+                 
+                ),
                 const SizedBox(height: 10),
                 ElevatedButton.icon(
                   icon: const Icon(Icons.task_alt),
