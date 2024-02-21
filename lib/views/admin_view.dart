@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:garage_parrot/components/footer.dart';
 import 'package:garage_parrot/components/form_add_service.dart';
+import 'package:garage_parrot/components/form_add_worker.dart';
 import 'package:garage_parrot/components/form_valid_comment.dart';
 import 'package:garage_parrot/components/header.dart';
 import 'package:garage_parrot/components/line.dart';
@@ -43,10 +44,18 @@ class _AdminViewState extends State<AdminView> {
           const Line(),
           Center(
             child: Text(
+              'Ajoutez un employé',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+          ),
+          const FormAddWorker(),
+          Center(
+            child: Text(
               'Ajoutez / Modifiez un service',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
           ),
+         
           const FormAddService(),
           ListServicesView(isScreenPhone: isScreenPhone, isAdmin: isAdmin),
 
