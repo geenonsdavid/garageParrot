@@ -15,32 +15,11 @@ class _FormAddServiceState extends State<FormAddService> {
   final _serviceFocus = FocusNode();
   final _discribeFocus = FocusNode();
   final _buttonFocus = FocusNode();
-  // Map pour stocker les données saisies
-  final Map<String, String> _formData = {};
-  late List<Map<String, String>> _data;
+  final _titleController = TextEditingController();
+  final _discribeController = TextEditingController();
 
-  @override
-  void initState() {
-    super.initState();
-    _data = [];
-  }
-
-  _clearFormField() {
-    setState(() {
-      _formData.clear();
-    });
-  }
-
-// callback for stock form datas
-
-  void onFormSubmit(Map<String, String> formData) {
-    // Faites quelque chose avec les données saisies, comme les envoyer à un serveur ou les enregistrer localement
-    setState(() {
-      _data.add(formData);
-    });
-    debugPrint("Données saisies : $formData");
-    debugPrint(_data.toString());
-  }
+  // list des maps
+  final List<Map<String, String>> _formDataList = [];
 
   @override
   Widget build(BuildContext context) {
@@ -75,29 +54,23 @@ class _FormAddServiceState extends State<FormAddService> {
               Padding(
                 padding: const EdgeInsets.all(4.0),
                 child: CustomField(
+                  controller: _titleController,
                   context: context,
                   customLabel: "Titre du service",
                   customHintText: "Choisir le titre",
                   customFocus: _serviceFocus,
                   customRequestFocus: _discribeFocus,
-                  onValueChanged: (value) {
-                    // stock data
-                    _formData["titre"] = value;
-                  },
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.all(4.0),
                 child: CustomField(
+                  controller: _discribeController,
                   context: context,
                   customLabel: "Description",
                   customHintText: "décrire le service",
                   customFocus: _discribeFocus,
                   customRequestFocus: _buttonFocus,
-                  onValueChanged: (value) {
-                    // stock data
-                    _formData["description"] = value;
-                  },
                 ),
               ),
               Padding(
@@ -106,11 +79,11 @@ class _FormAddServiceState extends State<FormAddService> {
                     focusNode: _buttonFocus,
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-              // Si le formulaire est valide, soumettre les données
-              onFormSubmit(_formData);
-              // Effacer le formulaire
-              _clearFormField();
-            }
+                        // Si le formulaire est valide, soumettre les données
+                        _addFormDataToList();
+                        // Effacer le formulaire
+                        _clearFormField();
+                      }
                     },
                     icon: SvgPicture.asset(
                       "../assets/icons/circle-plus-solid.svg",
@@ -127,5 +100,26 @@ class _FormAddServiceState extends State<FormAddService> {
         ),
       ),
     );
+  }
+
+  // Ajouter les données saisies à la liste
+  void _addFormDataToList() {
+    final Map<String, String> formData = {
+      'title': _titleController.text,
+      'description': _discribeController.text,
+    };
+    setState(() {
+      _formDataList.add(formData);
+      debugPrint("Liste des données: $_formDataList");
+    });
+  }
+
+  // efface les champs de saisie
+
+  _clearFormField() {
+    setState(() {
+      _titleController.clear();
+      _discribeController.clear();
+    });
   }
 }
