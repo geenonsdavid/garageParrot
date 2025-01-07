@@ -1,6 +1,6 @@
 List carData = [
   {
-    "image": "../assets/cars/car1.jpg",
+    "image": "./assets/cars/car1.jpg",
     "marque": "Citroen",
     "type": "C5",
     "cylinder": 2.1,
@@ -12,7 +12,7 @@ List carData = [
     "price": 135000
   },
   {
-    "image": "../assets/cars/car2.jpg",
+    "image": "./assets/cars/car2.jpg",
     "marque": "Toyota",
     "type": "Corolla",
     "cylinder": 1.8,
@@ -24,7 +24,7 @@ List carData = [
     "price": 150000
   },
   {
-    "image": "../assets/cars/car3.jpg",
+    "image": "./assets/cars/car3.jpg",
     "marque": "Peugeot",
     "type": "308",
     "cylinder": 1.8,
