@@ -79,7 +79,7 @@ class _FormValidCommentState extends State<FormValidComment> {
                   );
                 },
                 icon: SvgPicture.asset(
-                  "../assets/icons/check2-circle.svg",
+                  "./assets/icons/check2-circle.svg",
                   height: 25,
                   colorFilter: const ColorFilter.mode(secondary, BlendMode.srcIn),
                 ),

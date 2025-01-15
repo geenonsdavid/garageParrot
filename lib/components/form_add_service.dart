@@ -86,7 +86,7 @@ class _FormAddServiceState extends State<FormAddService> {
                       }
                     },
                     icon: SvgPicture.asset(
-                      "../assets/icons/circle-plus-solid.svg",
+                      "./assets/icons/circle-plus-solid.svg",
                       height: 20,
                       colorFilter: const ColorFilter.mode(
                         secondary,

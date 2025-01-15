@@ -138,7 +138,7 @@ class Car extends StatelessWidget {
                       onPressed: () {},
                       label: const Text("Details"),
                       icon: SvgPicture.asset(
-                        "../assets/icons/wrench-solid.svg",
+                        "./assets/icons/wrench-solid.svg",
                         height: 20,
                         colorFilter:
                             const ColorFilter.mode(secondary, BlendMode.srcIn),
@@ -151,7 +151,7 @@ class Car extends StatelessWidget {
                       onPressed: () {},
                       label: const Text("Contactez-nous"),
                       icon: SvgPicture.asset(
-                        "../assets/icons/send-fill.svg",
+                        "./assets/icons/send-fill.svg",
                         height: 20,
                         colorFilter:
                             const ColorFilter.mode(secondary, BlendMode.srcIn),
