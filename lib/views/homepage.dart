@@ -37,12 +37,7 @@ class _HomePageState extends State<HomePage> {
 
           // Widget pour afficher le pied de page
           Footer(isScreenPhone: isScreenPhone),
-
-          // Bouton d'action flottant
-          FloatingActionButton(
-            child: const Icon(Icons.abc),
-            onPressed: () {},
-          ),
+          
         ],
       ),
     );
