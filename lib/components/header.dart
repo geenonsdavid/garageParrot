@@ -29,8 +29,10 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: primary,
+      toolbarHeight: preferredSize.height,
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Image.asset(
             'assets/logo_garage_parrot.png',
@@ -41,22 +43,26 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
             title,
             style: Theme.of(context).textTheme.headlineLarge,
           ),
-          if (!isScreenPhone)
-            Text(
-              'Connexion',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          if (onLogoutPressed != null)
-            IconButton(
-              onPressed: onLogoutPressed,
-              icon: SvgPicture.asset(
-                'assets/icons/power-off-solid.svg',
-                colorFilter: const ColorFilter.mode(
-                  secondary,
-                  BlendMode.srcIn,
+          //if (!isScreenPhone)
+          Row(
+            children: [
+              if (isScreenPhone != true)
+                Text(
+                  'Connexion',
+                  style: Theme.of(context).textTheme.headlineMedium,
+                ),
+              IconButton(
+                onPressed: onLogoutPressed,
+                icon: SvgPicture.asset(
+                  'assets/icons/power-off-solid.svg',
+                  colorFilter: const ColorFilter.mode(
+                    secondary,
+                    BlendMode.srcIn,
+                  ),
                 ),
               ),
-            ),
+            ],
+          ),
         ],
       ),
       bottom: PreferredSize(
@@ -74,9 +80,9 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
                 () {
                   // Naviguer vers la page d'accueil
                   Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => HomePage(title: title))
-                  );
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => HomePage(title: title)));
                 },
               ),
               buildNavButton(
@@ -86,10 +92,10 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
                 context,
                 () {
                   // Naviguer vers la page de la galerie
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => ShopView(title: title))
-                  );
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ShopView(title: title)));
                 },
               ),
               buildNavButton(
@@ -100,10 +106,9 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
                 () {
                   // Naviguer vers la page d'administrateur
                   Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => AdminView(title: title))
-                  );
-                  
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => AdminView(title: title)));
                 },
               ),
             ],
