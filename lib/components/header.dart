@@ -6,6 +6,9 @@ import 'package:garage_parrot/views/admin_view.dart';
 import 'package:garage_parrot/views/homepage.dart';
 import 'package:garage_parrot/views/shop_view.dart';
 
+// En-tête de l'application
+/// isScreenPhone : détermine si l'écran est un téléphone
+/// onLogoutPressed : fonction appelée lorsqu'on appuie sur le bouton de déconnexion
 class Header extends StatelessWidget implements PreferredSizeWidget {
   const Header({
     Key? key,
