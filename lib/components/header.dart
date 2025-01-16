@@ -23,10 +23,12 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   // Taille préférée de l'en-tête
-  Size get preferredSize => const Size.fromHeight(152);
+  Size get preferredSize => Size.fromHeight(isScreenPhone ? 80 : 152);
 
   @override
   Widget build(BuildContext context) {
+    double iconSize = 20;
+    double iconPhoneWeb = 20;
     return AppBar(
       backgroundColor: primary,
       toolbarHeight: preferredSize.height,
@@ -36,14 +38,17 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
         children: [
           Image.asset(
             'assets/logo_garage_parrot.png',
-            height: isScreenPhone ? 50 : 100,
-            width: isScreenPhone ? 50 : 100,
+            height: isScreenPhone ? 30 : 100,
+            width: isScreenPhone ? 30 : 100,
           ),
+          // Titre de l'application
           Text(
             title,
-            style: Theme.of(context).textTheme.headlineLarge,
+            style: isScreenPhone
+                ? Theme.of(context).textTheme.headlineSmall
+                : Theme.of(context).textTheme.headlineLarge,
           ),
-          //if (!isScreenPhone)
+          // Bouton de déconnexion
           Row(
             children: [
               if (isScreenPhone != true)
@@ -54,6 +59,8 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
               IconButton(
                 onPressed: onLogoutPressed,
                 icon: SvgPicture.asset(
+                  height: 24,
+                  width: 24,
                   'assets/icons/power-off-solid.svg',
                   colorFilter: const ColorFilter.mode(
                     secondary,
@@ -65,10 +72,11 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
           ),
         ],
       ),
+      // Barre de navigation
       bottom: PreferredSize(
-        preferredSize: const Size.fromHeight(48),
+        preferredSize: Size.fromHeight(isScreenPhone ? 20 : 48),
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: EdgeInsets.all(isScreenPhone ? 2 : 8),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -79,11 +87,30 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
                 context,
                 () {
                   // Naviguer vers la page d'accueil
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => HomePage(title: title)));
+                  Navigator.pushReplacement(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) =>
+                          HomePage(title: title),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                        const begin = Offset(1.0, 0.0);
+                        const end = Offset.zero;
+                        const curve = Curves.ease;
+
+                        var tween = Tween(begin: begin, end: end)
+                            .chain(CurveTween(curve: curve));
+                        var offsetAnimation = animation.drive(tween);
+
+                        return SlideTransition(
+                          position: offsetAnimation,
+                          child: child,
+                        );
+                      },
+                    ),
+                  );
                 },
+                iconSize,
               ),
               buildNavButton(
                 'assets/icons/car-on-solid.svg',
@@ -92,11 +119,30 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
                 context,
                 () {
                   // Naviguer vers la page de la galerie
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ShopView(title: title)));
+                  Navigator.pushReplacement(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) =>
+                          ShopView(title: title),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                        const begin = Offset(1.0, 0.0);
+                        const end = Offset.zero;
+                        const curve = Curves.ease;
+
+                        var tween = Tween(begin: begin, end: end)
+                            .chain(CurveTween(curve: curve));
+                        var offsetAnimation = animation.drive(tween);
+
+                        return SlideTransition(
+                          position: offsetAnimation,
+                          child: child,
+                        );
+                      },
+                    ),
+                  );
                 },
+                iconSize,
               ),
               buildNavButton(
                 'assets/icons/admin.svg',
@@ -105,11 +151,30 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
                 context,
                 () {
                   // Naviguer vers la page d'administrateur
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => AdminView(title: title)));
+                  Navigator.pushReplacement(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) =>
+                          AdminView(title: title),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                        const begin = Offset(1.0, 0.0);
+                        const end = Offset.zero;
+                        const curve = Curves.ease;
+
+                        var tween = Tween(begin: begin, end: end)
+                            .chain(CurveTween(curve: curve));
+                        var offsetAnimation = animation.drive(tween);
+
+                        return SlideTransition(
+                          position: offsetAnimation,
+                          child: child,
+                        );
+                      },
+                    ),
+                  );
                 },
+                iconSize,
               ),
             ],
           ),
