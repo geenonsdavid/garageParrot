@@ -28,7 +28,6 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     double iconSize = 20;
-    double iconPhoneWeb = 20;
     return AppBar(
       backgroundColor: primary,
       toolbarHeight: preferredSize.height,
