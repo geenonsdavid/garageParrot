@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:garage_parrot/components/customfield.dart';
+import 'package:garage_parrot/components/list_workers.dart';
 import 'package:garage_parrot/themes/colors.dart';
 import 'package:http/http.dart' as http;
 import 'package:garage_parrot/components/dialog_helpers.dart';
@@ -107,21 +108,29 @@ class _FormAddWorkerState extends State<FormAddWorker> {
         child: Column(
           children: <Widget>[
             ..._buildCustomFields(),
-            _buildSubmitButton(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                _buildSubmitButton("Liste des employés",_viewList),
+                _buildSubmitButton("Ajouter un employé",_onSubmit),],
+            ),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildSubmitButton() => ElevatedButton.icon(
+  Widget _buildSubmitButton(label,onSubmit) => ElevatedButton.icon(
         icon: const Icon(Icons.task_alt),
-        onPressed: _onSubmit,
-        label: const Text("Envoyez"),
+        onPressed: onSubmit,
+        label: Text(label),
       );
 
   void _onSubmit() {
     if (_formKey.currentState!.validate()) insertrecord();
+  }
+  void _viewList() {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => const ListWorker()));
   }
 
   _buildCustomFields() =>
