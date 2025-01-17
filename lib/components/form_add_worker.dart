@@ -20,19 +20,16 @@ class _FormAddWorkerState extends State<FormAddWorker> {
   //final _phoneFocusNode = FocusNode();
   //final _messageFocusNode = FocusNode();
   final _focusNodes = List.generate(5, (index) => FocusNode());
-  final _nameController = TextEditingController();
-  final _lastnameController = TextEditingController();
-  final _emailController = TextEditingController();
-  final _phoneController = TextEditingController();
-  
+  //final _nameController = TextEditingController();
+  //final _lastnameController = TextEditingController();
+  //final _emailController = TextEditingController();
+  //final _phoneController = TextEditingController();
+  final _controllers = List.generate(4, (index) => TextEditingController());
 
   Future<void> insertrecord() async {
-    if (_nameController.text.isEmpty ||
-        _lastnameController.text.isEmpty ||
-        _emailController.text.isEmpty ||
-        _phoneController.text.isEmpty) {
+    if (_controllers.any((controller) => controller.text.isEmpty )){
       if (mounted) {
-        showErrorDialog(context, "Veuillez remplir tous les champs");
+      showErrorDialog(context, "Veuillez remplir tous les champs");
       }
       return;
     }
@@ -41,10 +38,10 @@ class _FormAddWorkerState extends State<FormAddWorker> {
       String uri = "http://192.168.1.69/garageparrot_api/insert_record.php";
 
       var res = await http.post(Uri.parse(uri), body: {
-        "name": _nameController.text,
-        "lastname": _lastnameController.text,
-        "email": _emailController.text,
-        "phone": _phoneController.text
+        "name": _controllers[0].text,
+        "lastname": _controllers[1].text,
+        "email": _controllers[2].text,
+        "phone": _controllers[3].text,
       });
       if (res.statusCode != 200) {
         if (mounted) {
@@ -85,7 +82,7 @@ class _FormAddWorkerState extends State<FormAddWorker> {
           children: <Widget>[
             // Add TextFormFields and ElevatedButton here.
             CustomField(
-              controller: _nameController,
+              controller: _controllers[0],
               context: context,
               customLabel: "nom",
               customHintText: "Veuillez le nom de l'employé",
@@ -94,7 +91,7 @@ class _FormAddWorkerState extends State<FormAddWorker> {
             ),
             const SizedBox(height: 10),
             CustomField(
-              controller: _lastnameController,
+              controller: _controllers[1],
               context: context,
               customLabel: "Prénom",
               customHintText: "Veuillez entrer votre prénom",
@@ -103,7 +100,7 @@ class _FormAddWorkerState extends State<FormAddWorker> {
             ),
             const SizedBox(height: 10),
             CustomField(
-              controller: _emailController,
+              controller: _controllers[2],
               context: context,
               customLabel: "Email",
               customHintText: "Veuillez entrer son email",
@@ -112,7 +109,7 @@ class _FormAddWorkerState extends State<FormAddWorker> {
             ),
             const SizedBox(height: 10),
             CustomField(
-              controller: _phoneController,
+              controller: _controllers[3],
               context: context,
               customLabel: "Téléphone",
               customHintText: "Veuillez entrer votre téléphone",
