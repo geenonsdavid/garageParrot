@@ -14,22 +14,13 @@ class FormAddWorker extends StatefulWidget {
 
 class _FormAddWorkerState extends State<FormAddWorker> {
   final _formKey = GlobalKey<FormState>();
-  //final _lastnameFocusNode = FocusNode();
-  //final _nameFocusNode = FocusNode();
-  //final _emailFocusNode = FocusNode();
-  //final _phoneFocusNode = FocusNode();
-  //final _messageFocusNode = FocusNode();
   final _focusNodes = List.generate(5, (index) => FocusNode());
-  //final _nameController = TextEditingController();
-  //final _lastnameController = TextEditingController();
-  //final _emailController = TextEditingController();
-  //final _phoneController = TextEditingController();
   final _controllers = List.generate(4, (index) => TextEditingController());
 
   Future<void> insertrecord() async {
-    if (_controllers.any((controller) => controller.text.isEmpty )){
+    if (_controllers.any((controller) => controller.text.isEmpty)) {
       if (mounted) {
-      showErrorDialog(context, "Veuillez remplir tous les champs");
+        showErrorDialog(context, "Veuillez remplir tous les champs");
       }
       return;
     }
@@ -59,7 +50,7 @@ class _FormAddWorkerState extends State<FormAddWorker> {
         }
       }
     } catch (e) {
-      if(mounted){
+      if (mounted) {
         showErrorDialog(context, "erreur de requête: $e");
       }
     }
