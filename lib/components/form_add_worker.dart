@@ -14,16 +14,21 @@ class FormAddWorker extends StatefulWidget {
 
 class _FormAddWorkerState extends State<FormAddWorker> {
   final _formKey = GlobalKey<FormState>();
-  
+
   final List<Map<String, String>> _fields = [
     {"label": "Nom", "hintText": "Veuillez entrer le nom de l'employé"},
     {"label": "Prénom", "hintText": "Veuillez entrer le prénom de l'employé"},
     {"label": "Email", "hintText": "Veuillez entrer son email"},
-    {"label": "Téléphone", "hintText": "Veuillez entrer son numéro de téléphone"},
+    {
+      "label": "Téléphone",
+      "hintText": "Veuillez entrer son numéro de téléphone"
+    },
   ];
-  
-  final _focusNodes = List.generate(5, (index) => FocusNode());
-  late final _controllers = List.generate(_fields.length, (index) => TextEditingController());
+
+  late final _focusNodes =
+      List.generate(_fields.length, (index) => FocusNode());
+  late final _controllers =
+      List.generate(_fields.length, (index) => TextEditingController());
 
   Future<void> insertrecord() async {
     if (_controllers.any((controller) => controller.text.isEmpty)) {
@@ -64,7 +69,7 @@ class _FormAddWorkerState extends State<FormAddWorker> {
     }
   }
 
-Widget _buildCustomField(int index, String label, String hintText) {
+  Widget _buildCustomField(int index, String label, String hintText) {
     return Column(
       children: [
         CustomField(
@@ -73,13 +78,14 @@ Widget _buildCustomField(int index, String label, String hintText) {
           customLabel: label,
           customHintText: hintText,
           customFocus: _focusNodes[index],
-          customRequestFocus: index < _focusNodes.length - 1 ? _focusNodes[index + 1] : FocusNode(),
+          customRequestFocus: index < _focusNodes.length - 1
+              ? _focusNodes[index + 1]
+              : FocusNode(),
         ),
         const SizedBox(height: 10),
       ],
     );
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -96,25 +102,28 @@ Widget _buildCustomField(int index, String label, String hintText) {
         key: _formKey,
         child: Column(
           children: <Widget>[
-            for (int i = 0; i < _fields.length; i++)
-              _buildCustomField(i, _fields[i]["label"]!, _fields[i]["hintText"]!),
-            // Add TextFormFields and ElevatedButton here.
-            //_buildCustomField(0, "Nom", "Veuillez entrer le nom de l'employé"),
-            //_buildCustomField(1, "Prénom", "Veuillez entrer le prénom de l'employé"),
-            //_buildCustomField(2, "Email", "Veuillez entrer son email"),
-            //_buildCustomField(3, "Téléphone", "Veuillez son numéro de téléphone"),
-            ElevatedButton.icon(
-              icon: const Icon(Icons.task_alt),
-              onPressed: () {
-                if (_formKey.currentState!.validate()) {
-                  insertrecord();
-                }
-              },
-              label: const Text("Envoyez"),
-            ),
+            ..._buildCustomFields(),
+            _buildSubmitButton(),
           ],
         ),
       ),
     );
   }
+
+  Widget _buildSubmitButton() => ElevatedButton.icon(
+        icon: const Icon(Icons.task_alt),
+        onPressed: _onSubmit,
+        label: const Text("Envoyez"),
+      );
+
+  void _onSubmit() {
+    if (_formKey.currentState!.validate()) insertrecord();
+  }
+
+  _buildCustomFields() =>
+  List.generate(
+        _fields.length,
+        (index) => _buildCustomField(
+            index, _fields[index]["label"]!, _fields[index]["hintText"]!),
+      );
 }
