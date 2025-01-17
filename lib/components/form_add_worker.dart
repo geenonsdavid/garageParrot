@@ -58,7 +58,10 @@ class _FormAddWorkerState extends State<FormAddWorker> {
       if (mounted) {
         if (response["success"] == "true") {
           showSuccessDialog(context, "Employé créé avec succès");
-          _controllers.forEach((controller) => controller.clear());// efface les champs après la création
+          // Clear all controllers
+          for (var controller in _controllers) {
+            controller.clear();
+          }
         } else {
           showErrorDialog(context, "Erreur lors de la création de l'employé");
         }
