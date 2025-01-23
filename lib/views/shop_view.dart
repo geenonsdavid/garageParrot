@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:garage_parrot/components/footer.dart';
 import 'package:garage_parrot/components/header.dart';
+import 'package:garage_parrot/components/onlogoutpressed.dart';
 import 'package:garage_parrot/views/list_cars_view.dart';
 
 class ShopView extends StatefulWidget {
@@ -26,7 +27,7 @@ class _ShopViewState extends State<ShopView> {
     }
 
     return Scaffold(
-      appBar: Header(title: widget.title, isScreenPhone: isScreenPhone),
+      appBar: Header(title: widget.title, isScreenPhone: isScreenPhone, onLogoutPressed: () => onLogoutPressed(context)),
       body: ListView(
         children: [
           ListCarsView(isScreenPhone: isScreenPhone, isAdmin: isAdmin),

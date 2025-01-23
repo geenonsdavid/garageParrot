@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:garage_parrot/components/footer.dart';
+import 'package:garage_parrot/components/onlogoutpressed.dart';
 import 'package:garage_parrot/views/list_services_view.dart';
 import '../components/header.dart';
+
 
 class HomePage extends StatefulWidget {
   const HomePage({
@@ -18,19 +20,13 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     const isAdmin = false;
-    final currentWidth = MediaQuery.of(context).size.width;
     bool isScreenPhone;
 
     // Responsivité : détermine si l'écran est un téléphone
-    if (currentWidth < 480) {
-      isScreenPhone = true;
-    } else {
-      isScreenPhone = false;
-    }
+    MediaQuery.of(context).size.width < 480 ? isScreenPhone = true : isScreenPhone = false;
 
-    
     return Scaffold(
-      appBar: Header(title: widget.title, isScreenPhone: isScreenPhone),
+      appBar: Header(title: widget.title, isScreenPhone: isScreenPhone, onLogoutPressed: () => onLogoutPressed(context),),
       body: ListView(
         children: [
           ListServicesView(isScreenPhone: isScreenPhone, isAdmin: isAdmin),

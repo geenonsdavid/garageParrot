@@ -5,6 +5,7 @@ import 'package:garage_parrot/components/form_add_worker.dart';
 import 'package:garage_parrot/components/form_valid_comment.dart';
 import 'package:garage_parrot/components/header.dart';
 import 'package:garage_parrot/components/line.dart';
+import 'package:garage_parrot/components/onlogoutpressed.dart';
 import 'package:garage_parrot/views/list_services_view.dart';
 
 class AdminView extends StatefulWidget {
@@ -31,7 +32,7 @@ class _AdminViewState extends State<AdminView> {
     }
 
     return Scaffold(
-      appBar: Header(title: widget.title, isScreenPhone: isScreenPhone),
+      appBar: Header(title: widget.title, isScreenPhone: isScreenPhone, onLogoutPressed: ()=> onLogoutPressed()),
       body: ListView(
         children: [
           Center(
@@ -55,7 +56,7 @@ class _AdminViewState extends State<AdminView> {
               style: Theme.of(context).textTheme.headlineMedium,
             ),
           ),
-         
+        
           const FormAddService(),
           ListServicesView(isScreenPhone: isScreenPhone, isAdmin: isAdmin),
 
