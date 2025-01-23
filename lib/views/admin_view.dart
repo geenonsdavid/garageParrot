@@ -32,7 +32,7 @@ class _AdminViewState extends State<AdminView> {
     }
 
     return Scaffold(
-      appBar: Header(title: widget.title, isScreenPhone: isScreenPhone, onLogoutPressed: ()=> onLogoutPressed()),
+      appBar: Header(title: widget.title, isScreenPhone: isScreenPhone, onLogoutPressed: ()=> onLogoutPressed(context)),
       body: ListView(
         children: [
           Center(
