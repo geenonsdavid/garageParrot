@@ -1,10 +1,10 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:garage_parrot/components/api_service.dart';
 import 'package:garage_parrot/components/customfield.dart';
 import 'package:garage_parrot/components/list_workers.dart';
 import 'package:garage_parrot/themes/colors.dart';
-import 'package:http/http.dart' as http;
-import 'package:garage_parrot/components/dialog_helpers.dart';
+
+
 
 class FormAddWorker extends StatefulWidget {
   const FormAddWorker({super.key});
@@ -32,47 +32,8 @@ class _FormAddWorkerState extends State<FormAddWorker> {
       List.generate(_fields.length, (index) => TextEditingController());
 
   Future<void> insertrecord() async {
-    if (_controllers.any((controller) => controller.text.isEmpty)) {
-      if (mounted) {
-        showErrorDialog(context, "Veuillez remplir tous les champs");
-      }
-      return;
-    }
-
-    try {
-      String uri = "http://192.168.1.69/garageparrot_api/insert_record.php";
-
-      var res = await http.post(Uri.parse(uri), body: {
-        "name": _controllers[0].text,
-        "lastname": _controllers[1].text,
-        "email": _controllers[2].text,
-        "phone": _controllers[3].text,
-      });
-      if (res.statusCode != 200) {
-        if (mounted) {
-          showErrorDialog(context, "Erreur lors de la connexion au serveur");
-        }
-        return;
-      }
-
-      var response = jsonDecode(res.body);
-      if (mounted) {
-        if (response["success"] == "true") {
-          showSuccessDialog(context, "Employé créé avec succès");
-          // Clear all controllers
-          for (var controller in _controllers) {
-            controller.clear();
-          }
-        } else {
-          showErrorDialog(context, "Erreur lors de la création de l'employé");
-        }
-      }
-    } catch (e) {
-      if (mounted) {
-        showErrorDialog(context, "erreur de requête: $e");
-      }
-    }
-  }
+  await insertRecord(context, _controllers, _focusNodes);
+}
 
   Widget _buildCustomField(int index, String label, String hintText) {
     return Column(
