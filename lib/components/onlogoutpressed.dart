@@ -3,7 +3,7 @@ import 'package:garage_parrot/views/login_view.dart';
 
 void onLogoutPressed(context) {
   // define what happens when the user logs out
-    print('User logged out');
+    debugPrint('User logged out');
   // redirige vers view de connexion
   Navigator.push(
     context,
