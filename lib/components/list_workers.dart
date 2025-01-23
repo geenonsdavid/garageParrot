@@ -20,7 +20,7 @@ class ListWorker extends StatelessWidget {
             leading: const Icon(Icons.person),
             trailing: const Icon(Icons.arrow_forward_ios),
             onTap: () {
-              print("click");
+              debugPrint("click");
             },
           );
         },
