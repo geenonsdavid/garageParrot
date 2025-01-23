@@ -3,7 +3,97 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 
-Future<void> insertRecord(BuildContext context, List<TextEditingController> controllers, List<FocusNode> focusNodes) async {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+void showErrorDialog(BuildContext context, String message) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text("Erreur"),
+        content: Text(message),
+        actions: <Widget>[
+          TextButton(
+            child: const Text("OK"),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
+
+void showSuccessDialog(BuildContext context, String message) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text("Succès"),
+        content: Text(message),
+        actions: <Widget>[
+          TextButton(
+            child: const Text("OK"),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
+
+class ApiService {
+  Future<void> insertRecord(BuildContext context,
+    List<TextEditingController> controllers, List<FocusNode> focusNodes) async {
   if (controllers.any((controller) => controller.text.isEmpty)) {
     if (context.mounted) {
       showErrorDialog(context, "Veuillez remplir tous les champs");
@@ -56,42 +146,29 @@ Future<void> insertRecord(BuildContext context, List<TextEditingController> cont
 }
 
 
-void showErrorDialog(BuildContext context, String message) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: const Text("Erreur"),
-        content: Text(message),
-        actions: <Widget>[
-          TextButton(
-            child: const Text("OK"),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
+  Future<bool> login(Map<String, String> data) async {
+    try {
+      final response = await http.post(
+        Uri.parse('http://192.168.1.69/garageparrot_api/login.php'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(data),
       );
-    },
-  );
-}
+      debugPrint("response: ${response.body}");
 
-void showSuccessDialog(BuildContext context, String message) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text("Succès"),
-        content: Text(message),
-        actions: <Widget>[
-          TextButton(
-            child: Text("OK"),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
-      );
-    },
-  );
+      if (response.statusCode == 200) {
+        final responseData = jsonDecode(response.body);
+        // Assurez-vous que la réponse contient un champ indiquant le succès de la connexion
+        return responseData['success'];
+      } else {
+        // Gérer les erreurs de la requête
+        return false;
+      }
+    } catch (e) {
+      // Gérer les erreurs de la requête
+      debugPrint("erreur de requête: $e");
+      return false;
+    }
+  }
 }
