@@ -22,7 +22,7 @@ class _AdminViewState extends State<AdminView> {
   Widget build(BuildContext context) {
     final currentWidth = MediaQuery.of(context).size.width;
     bool isScreenPhone;
-    bool isAdmin = true;
+    bool isAdmin = false;
 
     // Responsivité : détermine si l'écran est un téléphone
     if (currentWidth < 480) {
@@ -32,7 +32,10 @@ class _AdminViewState extends State<AdminView> {
     }
 
     return Scaffold(
-      appBar: Header(title: widget.title, isScreenPhone: isScreenPhone, onLogoutPressed: ()=> onLogoutPressed(context)),
+      appBar: Header(
+          title: widget.title,
+          isScreenPhone: isScreenPhone,
+          onLogoutPressed: () => onLogoutPressed(context)),
       body: ListView(
         children: [
           Center(
@@ -43,22 +46,10 @@ class _AdminViewState extends State<AdminView> {
           ),
           const FormValidComment(),
           const Line(),
-          Center(
-            child: Text(
-              'Ajoutez un employé',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ),
-          const FormAddWorker(),
-          Center(
-            child: Text(
-              'Ajoutez / Modifiez un service',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ),
-        
-          const FormAddService(),
-          ListServicesView(isScreenPhone: isScreenPhone, isAdmin: isAdmin),
+          if (isAdmin == true) const FormAddWorker(),
+          if (isAdmin == true) const Line(),
+          if (isAdmin == true) const FormAddService(),
+          if (isAdmin == true) ListServicesView(isScreenPhone: isScreenPhone, isAdmin: isAdmin),
 
           // Widget pour afficher le pied de page
           Footer(isScreenPhone: isScreenPhone),
