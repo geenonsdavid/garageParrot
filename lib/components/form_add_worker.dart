@@ -4,8 +4,6 @@ import 'package:garage_parrot/components/customfield.dart';
 import 'package:garage_parrot/components/list_workers.dart';
 import 'package:garage_parrot/themes/colors.dart';
 
-
-
 class FormAddWorker extends StatefulWidget {
   const FormAddWorker({super.key});
 
@@ -32,11 +30,11 @@ class _FormAddWorkerState extends State<FormAddWorker> {
       List.generate(_fields.length, (index) => TextEditingController());
 
   Future<void> insertrecord() async {
-  // Call the ApiService class to insert a record
-  final apiService = ApiService();
-  // Call the insertRecord method from the ApiService class
-  await apiService.insertRecord(context, _controllers, _focusNodes);
-}
+    // Call the ApiService class to insert a record
+    final apiService = ApiService();
+    // Call the insertRecord method from the ApiService class
+    await apiService.insertRecord(context, _controllers, _focusNodes);
+  }
 
   Widget _buildCustomField(int index, String label, String hintText) {
     return Column(
@@ -71,12 +69,23 @@ class _FormAddWorkerState extends State<FormAddWorker> {
         key: _formKey,
         child: Column(
           children: <Widget>[
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.only(bottom:8.0),
+                child: Text(
+                  'Ajoutez un employé',
+                  style: Theme.of(context).textTheme.headlineMedium,
+                ),
+              ),
+            ),
+            
             ..._buildCustomFields(),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                _buildSubmitButton("Liste des employés",_viewList),
-                _buildSubmitButton("Ajouter un employé",_onSubmit),],
+                _buildSubmitButton("Liste des employés", _viewList),
+                _buildSubmitButton("Ajouter un employé", _onSubmit),
+              ],
             ),
           ],
         ),
@@ -84,7 +93,7 @@ class _FormAddWorkerState extends State<FormAddWorker> {
     );
   }
 
-  Widget _buildSubmitButton(label,onSubmit) => ElevatedButton.icon(
+  Widget _buildSubmitButton(label, onSubmit) => ElevatedButton.icon(
         icon: const Icon(Icons.task_alt),
         onPressed: onSubmit,
         label: Text(label),
@@ -93,12 +102,13 @@ class _FormAddWorkerState extends State<FormAddWorker> {
   void _onSubmit() {
     if (_formKey.currentState!.validate()) insertrecord();
   }
+
   void _viewList() {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => const ListWorker()));
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => const ListWorker()));
   }
 
-  _buildCustomFields() =>
-  List.generate(
+  _buildCustomFields() => List.generate(
         _fields.length,
         (index) => _buildCustomField(
             index, _fields[index]["label"]!, _fields[index]["hintText"]!),
