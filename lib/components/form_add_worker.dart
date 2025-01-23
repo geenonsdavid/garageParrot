@@ -32,7 +32,10 @@ class _FormAddWorkerState extends State<FormAddWorker> {
       List.generate(_fields.length, (index) => TextEditingController());
 
   Future<void> insertrecord() async {
-  await insertRecord(context, _controllers, _focusNodes);
+  // Call the ApiService class to insert a record
+  final apiService = ApiService();
+  // Call the insertRecord method from the ApiService class
+  await apiService.insertRecord(context, _controllers, _focusNodes);
 }
 
   Widget _buildCustomField(int index, String label, String hintText) {
