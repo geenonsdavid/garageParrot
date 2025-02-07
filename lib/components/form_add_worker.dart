@@ -4,8 +4,6 @@ import 'package:garage_parrot/components/customfield.dart';
 import 'package:garage_parrot/components/list_workers.dart';
 import 'package:garage_parrot/themes/colors.dart';
 
-
-
 class FormAddWorker extends StatefulWidget {
   const FormAddWorker({super.key});
 
@@ -16,25 +14,57 @@ class FormAddWorker extends StatefulWidget {
 class _FormAddWorkerState extends State<FormAddWorker> {
   final _formKey = GlobalKey<FormState>();
 
+  // list label et hintText
   final List<Map<String, String>> _fields = [
-    {"label": "Nom", "hintText": "Veuillez entrer le nom de l'employé"},
-    {"label": "Prénom", "hintText": "Veuillez entrer le prénom de l'employé"},
-    {"label": "Email", "hintText": "Veuillez entrer son email"},
+    {"label": "Nom", 
+    "hintText": "Veuillez entrer le nom de l'employé",
+    },
+    {"label": "Prénom", 
+    "hintText": "Veuillez entrer le prénom de l'employé",
+    },
+    {"label": "Email", 
+    "hintText": "Veuillez entrer son email",
+    },
     {
       "label": "Téléphone",
-      "hintText": "Veuillez entrer son numéro de téléphone"
+      "hintText": "Veuillez entrer son numéro de téléphone",
+    },
+    {"label": "Mot de passe", 
+    "hintText": "Veuillez entrer son mot de passe",
+    },
+    {"label": "Confirmer le mot de passe", 
+    "hintText": "Veuillez confirmer son mot de passe",
     },
   ];
 
-  late final _focusNodes =
-      List.generate(_fields.length, (index) => FocusNode());
-  late final _controllers =
-      List.generate(_fields.length, (index) => TextEditingController());
+  // list of focus nodes
+  late final _focusNodes = List.generate(_fields.length, (index) => FocusNode());
 
-  Future<void> insertrecord() async {
-  await insertRecord(context, _controllers, _focusNodes);
-}
+  // list of controllers
+  late final _controllers = List.generate(_fields.length, (index) => TextEditingController());
 
+  // créer instance ApiService
+  final ApiService apiservice = ApiService();
+
+  Future<void> insertworker() async {
+    await apiservice.insertWorker(
+      _controllers,
+      _focusNodes,
+      (message) => apiservice.showSuccessDialog(context, message),
+      (message) => apiservice.showErrorDialog(context, message),
+      );
+  }
+
+
+Future<void> getworkers() async {
+    await apiservice.getWorkers();
+  }
+
+  // build custom field
+  // index: index of the field
+  // label: label of the field
+  // hintText: hint text of the field
+  // return: custom field widget
   Widget _buildCustomField(int index, String label, String hintText) {
     return Column(
       children: [
@@ -68,12 +98,16 @@ class _FormAddWorkerState extends State<FormAddWorker> {
         key: _formKey,
         child: Column(
           children: <Widget>[
-            ..._buildCustomFields(),
+            ..._buildCustomFields(), // custom fields
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                _buildSubmitButton("Liste des employés",_viewList),
-                _buildSubmitButton("Ajouter un employé",_onSubmit),],
+                _buildSubmitButton(
+                    "Liste des employés", _viewList), // submit button,
+                _buildSubmitButton(
+                    "Ajouter un employé", _onSubmit) // submit button
+                ,
+              ],
             ),
           ],
         ),
@@ -81,21 +115,33 @@ class _FormAddWorkerState extends State<FormAddWorker> {
     );
   }
 
-  Widget _buildSubmitButton(label,onSubmit) => ElevatedButton.icon(
+  // build submit button
+  // label: label of the button
+  // onSubmit: function to call when the button is pressed
+  // return: submit button widget
+  Widget _buildSubmitButton(label, onSubmit) => ElevatedButton.icon(
         icon: const Icon(Icons.task_alt),
         onPressed: onSubmit,
         label: Text(label),
       );
 
+  // on submit
+  // validate the form
   void _onSubmit() {
-    if (_formKey.currentState!.validate()) insertrecord();
-  }
-  void _viewList() {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => const ListWorker()));
+    if (_formKey.currentState!.validate()) insertworker();
   }
 
-  _buildCustomFields() =>
-  List.generate(
+  // view list
+  void _viewList() {
+    // open view listWorkers
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) =>const  ListWorkers()),
+    );
+  }
+
+  // build custom fields
+  _buildCustomFields() => List.generate(
         _fields.length,
         (index) => _buildCustomField(
             index, _fields[index]["label"]!, _fields[index]["hintText"]!),
