@@ -51,33 +51,33 @@ class _FormAddWorkerState extends State<FormAddWorker> {
       List.generate(_fields.length, (index) => TextEditingController());
 
   // créer instance ApiService
-  final ApiService apiservice = ApiService();
+  final ApiService _apiservice = ApiService();
 
-  Future<void> insertworker() async {
+  Future<void> insertWorker() async {
     try {
-      await apiservice.insertWorker(
+      await _apiservice.insertWorker(
         _controllers,
         _focusNodes,
         (message) {
           if (mounted) {
-            apiservice.showSuccessDialog(context, message);
+            _apiservice.showSuccessDialog(context, message);
           }
         },
         (message) {
           if (mounted) {
-            apiservice.showErrorDialog(context, message);
+            _apiservice.showErrorDialog(context, message);
           }
         },
       );
     } catch (e) {
       if (mounted) {
-        apiservice.showErrorDialog(context, "Une erreur est survenue");
+        _apiservice.showErrorDialog(context, "Une erreur est survenue");
       }
     }
   }
 
   Future<void> getworkers() async {
-    await apiservice.getWorkers();
+    await _apiservice.getWorkers();
   }
 
   // build custom field
@@ -148,7 +148,7 @@ class _FormAddWorkerState extends State<FormAddWorker> {
   // on submit
   // validate the form
   void _onSubmit() {
-    if (_formKey.currentState!.validate()) insertworker();
+    if (_formKey.currentState!.validate()) insertWorker();
   }
 
   // view list
