@@ -16,47 +16,67 @@ class _FormAddWorkerState extends State<FormAddWorker> {
 
   // list label et hintText
   final List<Map<String, String>> _fields = [
-    {"label": "Nom", 
-    "hintText": "Veuillez entrer le nom de l'employé",
+    {
+      "label": "Nom",
+      "hintText": "Veuillez entrer le nom de l'employé",
     },
-    {"label": "Prénom", 
-    "hintText": "Veuillez entrer le prénom de l'employé",
+    {
+      "label": "Prénom",
+      "hintText": "Veuillez entrer le prénom de l'employé",
     },
-    {"label": "Email", 
-    "hintText": "Veuillez entrer son email",
+    {
+      "label": "Email",
+      "hintText": "Veuillez entrer son email",
     },
     {
       "label": "Téléphone",
       "hintText": "Veuillez entrer son numéro de téléphone",
     },
-    {"label": "Mot de passe", 
-    "hintText": "Veuillez entrer son mot de passe",
+    {
+      "label": "Mot de passe",
+      "hintText": "Veuillez entrer son mot de passe",
     },
-    {"label": "Confirmer le mot de passe", 
-    "hintText": "Veuillez confirmer son mot de passe",
+    {
+      "label": "Confirmer le mot de passe",
+      "hintText": "Veuillez confirmer son mot de passe",
     },
   ];
 
   // list of focus nodes
-  late final _focusNodes = List.generate(_fields.length, (index) => FocusNode());
+  late final _focusNodes =
+      List.generate(_fields.length, (index) => FocusNode());
 
   // list of controllers
-  late final _controllers = List.generate(_fields.length, (index) => TextEditingController());
+  late final _controllers =
+      List.generate(_fields.length, (index) => TextEditingController());
 
   // créer instance ApiService
   final ApiService apiservice = ApiService();
 
   Future<void> insertworker() async {
-    await apiservice.insertWorker(
-      _controllers,
-      _focusNodes,
-      (message) => apiservice.showSuccessDialog(context, message),
-      (message) => apiservice.showErrorDialog(context, message),
+    try {
+      await apiservice.insertWorker(
+        _controllers,
+        _focusNodes,
+        (message) {
+          if (mounted) {
+            apiservice.showSuccessDialog(context, message);
+          }
+        },
+        (message) {
+          if (mounted) {
+            apiservice.showErrorDialog(context, message);
+          }
+        },
       );
+    } catch (e) {
+      if (mounted) {
+        apiservice.showErrorDialog(context, "Une erreur est survenue");
+      }
+    }
   }
 
-
-Future<void> getworkers() async {
+  Future<void> getworkers() async {
     await apiservice.getWorkers();
   }
 
@@ -136,7 +156,7 @@ Future<void> getworkers() async {
     // open view listWorkers
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) =>const  ListWorkers()),
+      MaterialPageRoute(builder: (context) => const ListWorkers()),
     );
   }
 
