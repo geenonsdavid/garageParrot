@@ -60,6 +60,7 @@ class _FormAddServiceState extends State<FormAddService> {
                   customHintText: "Choisir le titre",
                   customFocus: _serviceFocus,
                   customRequestFocus: _discribeFocus,
+                  validator: (value){},
                 ),
               ),
               Padding(
@@ -71,6 +72,7 @@ class _FormAddServiceState extends State<FormAddService> {
                   customHintText: "décrire le service",
                   customFocus: _discribeFocus,
                   customRequestFocus: _buttonFocus,
+                  validator: (value){},
                 ),
               ),
               Padding(

@@ -77,6 +77,20 @@ class _FormAddWorkerState extends State<FormAddWorker> {
     }
   }
 
+  // Validation des mots de passe
+  String? _passwordValidator(int index, String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return "Veuillez remplir ce champ";
+    }
+    if (index == 4 && value.length < 6) {
+      return "Le mot de passe doit contenir au moins 6 caractères";
+    }
+    if (index == 5 && value != _controllers[4].text) {
+      return "Les mots de passe ne correspondent pas";
+    }
+    return null;
+  }
+
   Future<void> getworkers() async {
     await _apiservice.getWorkers();
   }
@@ -90,15 +104,22 @@ class _FormAddWorkerState extends State<FormAddWorker> {
     return Column(
       children: [
         CustomField(
-          controller: _controllers[index],
-          //context: context,
-          customLabel: label,
-          customHintText: hintText,
-          customFocus: _focusNodes[index],
-          customRequestFocus: index < _focusNodes.length - 1
-              ? _focusNodes[index + 1]
-              : FocusNode(),
-        ),
+            controller: _controllers[index],
+            //context: context,
+            customLabel: label,
+            customHintText: hintText,
+            customFocus: _focusNodes[index],
+            customRequestFocus: index < _focusNodes.length - 1
+                ? _focusNodes[index + 1]
+                : FocusNode(),
+            validator: (value) {
+              if (index == 2) return _verifEmail(value);
+              if (index == 3) return _verifPhoneNumber(value);
+              if (index == 4 || index == 5) {
+                return _passwordValidator(index, value);
+              }
+              return null;
+            }),
         const SizedBox(height: 10),
       ],
     );
@@ -119,7 +140,7 @@ class _FormAddWorkerState extends State<FormAddWorker> {
         key: _formKey,
         child: Column(
           children: <Widget>[
-            ..._buildCustomFields(),// custom fields
+            ..._buildCustomFields(), // custom fields
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
@@ -163,11 +184,29 @@ class _FormAddWorkerState extends State<FormAddWorker> {
 
   // build custom fields
   _buildCustomFields() => List.generate(
-    _fields.length,
-    (index) =>_buildCustomField(
-      index,
-      _fields[index]["label"]!,
-      _fields[index]["hintText"]!,
-      ),
-  );
+        _fields.length,
+        (index) => _buildCustomField(
+          index,
+          _fields[index]["label"]!,
+          _fields[index]["hintText"]!,
+        ),
+      );
+
+  _verifEmail(value) {
+    // verify email
+    final emailRegex = RegExp(
+        r"^[a-zA-Z0-9.a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$");
+    if (!emailRegex.hasMatch(value)) {
+      return "Veuillez entrer un email valide";
+    }
+    return null;
+  }
+
+  _verifPhoneNumber(value) {
+    final phoneRegex = RegExp(r'^\+?[0-9]{10,15}$');
+    if (!phoneRegex.hasMatch(value)) {
+      return "Veuillez entrer un numéro valide";
+    }
+    return null;
+  }
 }

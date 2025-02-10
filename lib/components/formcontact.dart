@@ -73,7 +73,7 @@ class FormContactState extends State<FormContact> {
                   customHintText: "Veuillez entrer votre nom",
                   customFocus: _nameFocusNode,
                   customRequestFocus: _lastnameFocusNode,
-                 
+                  validator: (value){},
                   
                 ),
                 const SizedBox(height: 10),
@@ -84,7 +84,7 @@ class FormContactState extends State<FormContact> {
                   customHintText: "Veuillez entrer votre prénom",
                   customFocus: _lastnameFocusNode,
                   customRequestFocus: _emailFocusNode,
-                 
+                  validator: (value){},
                   
                 ),
                 const SizedBox(height: 10),
@@ -95,8 +95,7 @@ class FormContactState extends State<FormContact> {
                   customHintText: "Veuillez entrer votre email",
                   customFocus: _emailFocusNode,
                   customRequestFocus: _phoneFocusNode,
-                 
-                  
+                  validator: (value){},
                 ),
                 const SizedBox(height: 10),
                 CustomField(
@@ -106,8 +105,7 @@ class FormContactState extends State<FormContact> {
                   customHintText: "Veuillez entrer votre téléphone",
                   customFocus: _phoneFocusNode,
                   customRequestFocus: _messageFocusNode,
-                 
-                  
+                  validator: (value){},
                 ),
                 const SizedBox(height: 10),
                 CustomField(
@@ -118,8 +116,7 @@ class FormContactState extends State<FormContact> {
                   customFocus: _messageFocusNode,
                   customRequestFocus: _messageFocusNode,
                   maxLines: 4,
-                 
-                 
+                  validator: (value){},
                 ),
                 const SizedBox(height: 10),
                 ElevatedButton.icon(

@@ -10,6 +10,7 @@ class CustomField extends StatelessWidget {
     required this.customHintText,
     required this.customFocus,
     required this.customRequestFocus,
+    required this.validator,
     this.maxLines = 1,
   });
 
@@ -19,6 +20,7 @@ class CustomField extends StatelessWidget {
   final String customHintText;
   final FocusNode customFocus;
   final FocusNode customRequestFocus;
+  final String? Function(String?)? validator;
   final int maxLines;
 
   @override
@@ -36,11 +38,7 @@ class CustomField extends StatelessWidget {
       ),
       autovalidateMode: AutovalidateMode.onUserInteraction,
       // vérifie que le champ n'est pas vide
-      validator: (value) {
-        if (value == null || value.trim().isEmpty) {
-          return "veuillez remplir le champ";
-        } return null;  
-      },
+      validator: validator,
 
       // permet de passer au champ de texte suivant
       onFieldSubmitted: (value) {
