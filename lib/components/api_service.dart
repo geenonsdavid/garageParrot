@@ -17,21 +17,21 @@ class ApiService {
     // Préparation des données
     const String uri = "http://127.0.0.1/garageparrot_api/insert_worker.php";
     final Map<String, String> workerData = {
-      "name": controllers[0].text,
-      "lastname": controllers[1].text,
-      "email": controllers[2].text,
-      "phone": controllers[3].text,
-      "userpassword": controllers[4].text,
+      "name": controllers[0].text.trim(),
+      "lastname": controllers[1].text.trim(),
+      "email": controllers[2].text.trim(),
+      "phone": controllers[3].text.trim(),
+      "userpassword": controllers[4].text.trim(),
     };
     try {
-      var res = await http.post(Uri.parse(uri), body: workerData);
+      final res = await http.post(Uri.parse(uri), body: workerData);
       debugPrint("respons: ${res.body}");
       if (res.statusCode != 200) {
         showErrorDialog("Erreur lors de la connexion au serveur");
         return;
       }
 
-      var response = jsonDecode(res.body); //convert the response to json
+      final response = jsonDecode(res.body); //convert the response to json
       debugPrint("response en tableau: $response");
 
       //check if the response is successful
