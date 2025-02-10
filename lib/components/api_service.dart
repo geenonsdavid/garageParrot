@@ -50,55 +50,62 @@ class ApiService {
     }
   }
 
-  Future<void> getWorkers() async {
-    const String uri = "http://127.0.0.1/garageparrot_api/get_workers.php";
+  Future<List<Map<String, dynamic>>> getWorkers() async {
+  const String uri = "http://127.0.0.1/garageparrot_api/get_workers.php";
 
-    try {
-      // send http request
-      var res = await http.get(Uri.parse(uri));
-      debugPrint("response: ${res.body}"); // response body
-      debugPrint("status code: ${res.statusCode}"); // response status code
+  try {
+    // Envoi de la requête HTTP
+    var res = await http.get(Uri.parse(uri));
+    debugPrint("response: ${res.body}"); // Corps de la réponse
+    debugPrint("status code: ${res.statusCode}"); // Code de statut de la réponse
 
-      // check if the response is successful
-      if (res.statusCode != 200) {
-        debugPrint("Erreur lors de la connexion au serveur");
-        return;
-      }
-
-      if (res.body.isEmpty) {
-        debugPrint("Réponse vide du serveur");
-        return;
-      }
-
-      // convert the response to json
-      var response = jsonDecode(res.body);
-
-      // Si la réponse est une liste, traitez-la directement
-      if (response is List) {
-        debugPrint("Employés: $response");
-
-        // Exemple de traitement de la liste des travailleurs
-        for (var worker in response) {
-          int id = int.tryParse(worker['id'].toString()) ??
-              0; // Assurez-vous que 'id' est un int
-          String name = worker['name'];
-          String lastname = worker['lastname'];
-          String email = worker['email'];
-          String phone = worker['phone'];
-          debugPrint('Worker: $id, $name $lastname, $email, $phone');
-        }
-      } else {
-        debugPrint("Structure de réponse inattendue");
-      }
-      /*if (response["success"] == "true") {
-      debugPrint("Employés: ${response["data"]}");
-    } else {
-      debugPrint("Erreur lors de la récupération des employés");
-    }*/
-    } catch (e) {
-      debugPrint("erreur de requête: $e");
+    // Vérifier si la réponse est réussie (code 200)
+    if (res.statusCode != 200) {
+      debugPrint("Erreur lors de la connexion au serveur");
+      return []; // Retourner une liste vide en cas d'erreur
     }
+
+    if (res.body.isEmpty) {
+      debugPrint("Réponse vide du serveur");
+      return []; // Retourner une liste vide si la réponse est vide
+    }
+
+    // Convertir la réponse en JSON
+    var response = jsonDecode(res.body);
+
+    // Si la réponse est une liste, traiter les données
+    if (response is List) {
+      List<Map<String, dynamic>> workers = [];
+
+      for (var worker in response) {
+        int id = int.tryParse(worker['id'].toString()) ?? 0; // Assurez-vous que 'id' est un int
+        String name = worker['name'];
+        String lastname = worker['lastname'];
+        String email = worker['email'];
+        String phone = worker['phone'];
+
+        // Ajouter chaque employé à la liste
+        workers.add({
+          'id': id,
+          'name': name,
+          'lastname': lastname,
+          'email': email,
+          'phone': phone,
+        });
+
+        debugPrint('Worker: $id, $name $lastname, $email, $phone');
+      }
+
+      return workers; // Retourner la liste des travailleurs
+    } else {
+      debugPrint("Structure de réponse inattendue");
+      return []; // Retourner une liste vide si la structure est inattendue
+    }
+  } catch (e) {
+    debugPrint("Erreur de requête: $e");
+    return []; // Retourner une liste vide en cas d'erreur
   }
+}
 
 // delete worker
   Future<void> deleteWorker(
@@ -135,6 +142,7 @@ class ApiService {
     showErrorDialog("erreur de requête: $e");
   }
 }
+
 
 
   void showErrorDialog(BuildContext context, String message) {
@@ -176,4 +184,5 @@ class ApiService {
       },
     );
   }
+
 }
