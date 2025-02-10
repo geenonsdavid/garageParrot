@@ -55,7 +55,7 @@ class _FormAddServiceState extends State<FormAddService> {
                 padding: const EdgeInsets.all(4.0),
                 child: CustomField(
                   controller: _titleController,
-                  context: context,
+                  //context: context,
                   customLabel: "Titre du service",
                   customHintText: "Choisir le titre",
                   customFocus: _serviceFocus,
@@ -66,7 +66,7 @@ class _FormAddServiceState extends State<FormAddService> {
                 padding: const EdgeInsets.all(4.0),
                 child: CustomField(
                   controller: _discribeController,
-                  context: context,
+                  //context: context,
                   customLabel: "Description",
                   customHintText: "décrire le service",
                   customFocus: _discribeFocus,

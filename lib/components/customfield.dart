@@ -5,7 +5,7 @@ class CustomField extends StatelessWidget {
   const CustomField({
     super.key,
     required this.controller,
-    required this.context,
+    //required this.context,
     required this.customLabel,
     required this.customHintText,
     required this.customFocus,
@@ -13,7 +13,7 @@ class CustomField extends StatelessWidget {
     this.maxLines = 1,
   });
 
-  final BuildContext context;
+  //final BuildContext context;
   final TextEditingController controller;
   final String customLabel;
   final String customHintText;
@@ -34,13 +34,12 @@ class CustomField extends StatelessWidget {
         labelStyle: Theme.of(context).textTheme.labelLarge,
         hintText: customHintText,
       ),
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       // vérifie que le champ n'est pas vide
       validator: (value) {
         if (value == null || value.trim().isEmpty) {
           return "veuillez remplir le champ";
-        } else {
-          return null;
-        }
+        } return null;  
       },
 
       // permet de passer au champ de texte suivant

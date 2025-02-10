@@ -68,7 +68,7 @@ class FormContactState extends State<FormContact> {
                 // Add TextFormFields and ElevatedButton here.
                 CustomField(
                   controller: _nameController,
-                  context: context,
+                  //context: context,
                   customLabel: "nom",
                   customHintText: "Veuillez entrer votre nom",
                   customFocus: _nameFocusNode,
@@ -79,7 +79,7 @@ class FormContactState extends State<FormContact> {
                 const SizedBox(height: 10),
                 CustomField(
                   controller: _lastnameController,
-                  context: context,
+                  //context: context,
                   customLabel: "Prénom",
                   customHintText: "Veuillez entrer votre prénom",
                   customFocus: _lastnameFocusNode,
@@ -90,7 +90,7 @@ class FormContactState extends State<FormContact> {
                 const SizedBox(height: 10),
                 CustomField(
                   controller: _emailController,
-                  context: context,
+                  //context: context,
                   customLabel: "Email",
                   customHintText: "Veuillez entrer votre email",
                   customFocus: _emailFocusNode,
@@ -101,7 +101,7 @@ class FormContactState extends State<FormContact> {
                 const SizedBox(height: 10),
                 CustomField(
                   controller: _phoneController,
-                  context: context,
+                  //context: context,
                   customLabel: "Téléphone",
                   customHintText: "Veuillez entrer votre téléphone",
                   customFocus: _phoneFocusNode,
@@ -112,7 +112,7 @@ class FormContactState extends State<FormContact> {
                 const SizedBox(height: 10),
                 CustomField(
                   controller: _messageController,
-                  context: context,
+                  //context: context,
                   customLabel: "Message",
                   customHintText: "Veuillez entrer votre message",
                   customFocus: _messageFocusNode,

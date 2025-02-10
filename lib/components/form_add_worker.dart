@@ -54,6 +54,7 @@ class _FormAddWorkerState extends State<FormAddWorker> {
   final ApiService _apiservice = ApiService();
 
   Future<void> insertWorker() async {
+    debugPrint('list controllers : $_controllers');
     try {
       await _apiservice.insertWorker(
         _controllers,
@@ -90,7 +91,7 @@ class _FormAddWorkerState extends State<FormAddWorker> {
       children: [
         CustomField(
           controller: _controllers[index],
-          context: context,
+          //context: context,
           customLabel: label,
           customHintText: hintText,
           customFocus: _focusNodes[index],
@@ -118,7 +119,7 @@ class _FormAddWorkerState extends State<FormAddWorker> {
         key: _formKey,
         child: Column(
           children: <Widget>[
-            ..._buildCustomFields(), // custom fields
+            ..._buildCustomFields(),// custom fields
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
@@ -162,8 +163,11 @@ class _FormAddWorkerState extends State<FormAddWorker> {
 
   // build custom fields
   _buildCustomFields() => List.generate(
-        _fields.length,
-        (index) => _buildCustomField(
-            index, _fields[index]["label"]!, _fields[index]["hintText"]!),
-      );
+    _fields.length,
+    (index) =>_buildCustomField(
+      index,
+      _fields[index]["label"]!,
+      _fields[index]["hintText"]!,
+      ),
+  );
 }
