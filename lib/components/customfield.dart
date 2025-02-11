@@ -10,7 +10,7 @@ class CustomField extends StatelessWidget {
     required this.customHintText,
     required this.customFocus,
     required this.customRequestFocus,
-    required this.validator,
+    this.validator,
     this.maxLines = 1,
   });
 
