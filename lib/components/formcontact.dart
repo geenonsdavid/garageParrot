@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:garage_parrot/components/customfield.dart';
+import 'package:garage_parrot/src/utils/validator.dart';
 import 'package:garage_parrot/themes/colors.dart';
 
 // Define a custom Form widget.
@@ -36,7 +37,8 @@ class FormContactState extends State<FormContact> {
   final _phoneController = TextEditingController();
   final _messageController = TextEditingController();
 
-  
+  // créer une instance de Validator
+  final Validator validator = Validator();
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +76,6 @@ class FormContactState extends State<FormContact> {
                   customFocus: _nameFocusNode,
                   customRequestFocus: _lastnameFocusNode,
                   //validator: (value){},
-                  
                 ),
                 const SizedBox(height: 10),
                 CustomField(
@@ -85,7 +86,6 @@ class FormContactState extends State<FormContact> {
                   customFocus: _lastnameFocusNode,
                   customRequestFocus: _emailFocusNode,
                   //validator: (value){},
-                  
                 ),
                 const SizedBox(height: 10),
                 CustomField(
@@ -95,7 +95,7 @@ class FormContactState extends State<FormContact> {
                   customHintText: "Veuillez entrer votre email",
                   customFocus: _emailFocusNode,
                   customRequestFocus: _phoneFocusNode,
-                  validator: (value)=>_verifyEmail(value),
+                  validator: (value) => validator.verifEmail(value),
                 ),
                 const SizedBox(height: 10),
                 CustomField(
@@ -143,15 +143,7 @@ class FormContactState extends State<FormContact> {
     );
   }
 
-  _verifyEmail(value) {
-    // verify email
-    final emailRegex = RegExp(
-        r"^[a-zA-Z0-9.a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$");
-    if (!emailRegex.hasMatch(value)) {
-      return "Veuillez entrer un email valide";
-    }
-    return null;
-  }
+  
 
   _verifyPhoneNumber(value) {
     final phoneRegex = RegExp(r'^\+?[0-9]{10,15}$');

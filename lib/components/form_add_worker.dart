@@ -3,6 +3,7 @@ import 'package:garage_parrot/components/api_service.dart';
 import 'package:garage_parrot/components/customfield.dart';
 import 'package:garage_parrot/components/list_workers.dart';
 import 'package:garage_parrot/themes/colors.dart';
+import 'package:garage_parrot/src/utils/validator.dart';
 
 class FormAddWorker extends StatefulWidget {
   const FormAddWorker({super.key});
@@ -53,8 +54,10 @@ class _FormAddWorkerState extends State<FormAddWorker> {
   // créer instance ApiService
   final ApiService _apiservice = ApiService();
 
+  // crér instance Validator
+  final Validator validator = Validator();
+
   Future<void> insertWorker() async {
-    debugPrint('list controllers : $_controllers');
     try {
       await _apiservice.insertWorker(
         _controllers,
@@ -113,7 +116,7 @@ class _FormAddWorkerState extends State<FormAddWorker> {
                 ? _focusNodes[index + 1]
                 : FocusNode(),
             validator: (value) {
-              if (index == 2) return _verifEmail(value);
+              if (index == 2) return validator.verifEmail(value);
               if (index == 3) return _verifPhoneNumber(value);
               if (index == 4 || index == 5) {
                 return _passwordValidator(index, value);
@@ -170,18 +173,17 @@ class _FormAddWorkerState extends State<FormAddWorker> {
   // on submit
   // validate the form
   void _onSubmit() async {
-  // Vérification si l'email existe déjà
-  final email = _controllers[2].text.trim(); // L'email est à l'index 2
-  bool emailExists = await checkIfEmailExists(email);
+    // Vérification si l'email existe déjà
+    final email = _controllers[2].text.trim(); // L'email est à l'index 2
+    bool emailExists = await checkIfEmailExists(email);
 
-  if (emailExists) {
-    _apiservice.showErrorDialog(context, "L'email existe déjà !");
-  } else if (_formKey.currentState!.validate()) {
-    // Si l'email est unique, on soumet les données
-    insertWorker();
+    if (emailExists) {
+      _apiservice.showErrorDialog(context, "L'email existe déjà !");
+    } else if (_formKey.currentState!.validate()) {
+      // Si l'email est unique, on soumet les données
+      insertWorker();
+    }
   }
-}
-
 
   // view list
   void _viewList() {
@@ -202,16 +204,6 @@ class _FormAddWorkerState extends State<FormAddWorker> {
         ),
       );
 
-  _verifEmail(value) {
-    // verify email
-    final emailRegex = RegExp(
-        r"^[a-zA-Z0-9.a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$");
-    if (!emailRegex.hasMatch(value)) {
-      return "Veuillez entrer un email valide";
-    }
-    return null;
-  }
-
   _verifPhoneNumber(value) {
     final phoneRegex = RegExp(r'^\+?[0-9]{10,15}$');
     if (!phoneRegex.hasMatch(value)) {
@@ -221,23 +213,22 @@ class _FormAddWorkerState extends State<FormAddWorker> {
   }
 
   Future<bool> checkIfEmailExists(String email) async {
-  try {
-    // Récupère tous les travailleurs en appelant la méthode qui retourne la liste
-    List<Map<String, dynamic>> workers = await _apiservice.getWorkers(); 
+    try {
+      // Récupère tous les travailleurs en appelant la méthode qui retourne la liste
+      List<Map<String, dynamic>> workers = await _apiservice.getWorkers();
 
-    if (workers.isNotEmpty) {
-      // Parcours de la liste des travailleurs pour vérifier si l'email existe
-      for (var worker in workers) {
-        if (worker['email'] == email) {
-          return true; // Si l'email est trouvé, il existe déjà
+      if (workers.isNotEmpty) {
+        // Parcours de la liste des travailleurs pour vérifier si l'email existe
+        for (var worker in workers) {
+          if (worker['email'] == email) {
+            return true; // Si l'email est trouvé, il existe déjà
+          }
         }
       }
+      return false; // Si l'email n'a pas été trouvé
+    } catch (e) {
+      debugPrint('Erreur de vérification de l\'email: $e');
+      return false; // En cas d'erreur, on considère que l'email n'existe pas
     }
-    return false; // Si l'email n'a pas été trouvé
-  } catch (e) {
-    debugPrint('Erreur de vérification de l\'email: $e');
-    return false; // En cas d'erreur, on considère que l'email n'existe pas
   }
-}
-
 }
