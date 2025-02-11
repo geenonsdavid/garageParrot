@@ -9,4 +9,12 @@ class Validator {
     }
     return null;
   }
+
+  verifPhoneNumber(value) {
+    final phoneRegex = RegExp(r'^\+?[0-9]{10,15}$');
+    if (!phoneRegex.hasMatch(value)) {
+      return "Veuillez entrer un numéro valide";
+    }
+    return null;
+  }
 }
