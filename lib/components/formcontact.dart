@@ -73,7 +73,7 @@ class FormContactState extends State<FormContact> {
                   customHintText: "Veuillez entrer votre nom",
                   customFocus: _nameFocusNode,
                   customRequestFocus: _lastnameFocusNode,
-                  validator: (value){},
+                  //validator: (value){},
                   
                 ),
                 const SizedBox(height: 10),
@@ -84,7 +84,7 @@ class FormContactState extends State<FormContact> {
                   customHintText: "Veuillez entrer votre prénom",
                   customFocus: _lastnameFocusNode,
                   customRequestFocus: _emailFocusNode,
-                  validator: (value){},
+                  //validator: (value){},
                   
                 ),
                 const SizedBox(height: 10),
@@ -95,7 +95,7 @@ class FormContactState extends State<FormContact> {
                   customHintText: "Veuillez entrer votre email",
                   customFocus: _emailFocusNode,
                   customRequestFocus: _phoneFocusNode,
-                  validator: (value){},
+                  validator: (value)=>_verifyEmail(value),
                 ),
                 const SizedBox(height: 10),
                 CustomField(
@@ -105,7 +105,7 @@ class FormContactState extends State<FormContact> {
                   customHintText: "Veuillez entrer votre téléphone",
                   customFocus: _phoneFocusNode,
                   customRequestFocus: _messageFocusNode,
-                  validator: (value){},
+                  validator: (value) => _verifyPhoneNumber(value),
                 ),
                 const SizedBox(height: 10),
                 CustomField(
@@ -116,7 +116,7 @@ class FormContactState extends State<FormContact> {
                   customFocus: _messageFocusNode,
                   customRequestFocus: _messageFocusNode,
                   maxLines: 4,
-                  validator: (value){},
+                  //validator: (value){},
                 ),
                 const SizedBox(height: 10),
                 ElevatedButton.icon(
@@ -141,5 +141,23 @@ class FormContactState extends State<FormContact> {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('Envoie réussi')),
     );
+  }
+
+  _verifyEmail(value) {
+    // verify email
+    final emailRegex = RegExp(
+        r"^[a-zA-Z0-9.a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$");
+    if (!emailRegex.hasMatch(value)) {
+      return "Veuillez entrer un email valide";
+    }
+    return null;
+  }
+
+  _verifyPhoneNumber(value) {
+    final phoneRegex = RegExp(r'^\+?[0-9]{10,15}$');
+    if (!phoneRegex.hasMatch(value)) {
+      return "Veuillez entrer un numéro valide";
+    }
+    return null;
   }
 }
