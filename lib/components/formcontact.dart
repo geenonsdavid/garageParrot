@@ -105,7 +105,7 @@ class FormContactState extends State<FormContact> {
                   customHintText: "Veuillez entrer votre téléphone",
                   customFocus: _phoneFocusNode,
                   customRequestFocus: _messageFocusNode,
-                  validator: (value) => _verifyPhoneNumber(value),
+                  validator: (value) => validator.verifPhoneNumber(value),
                 ),
                 const SizedBox(height: 10),
                 CustomField(
@@ -141,15 +141,5 @@ class FormContactState extends State<FormContact> {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('Envoie réussi')),
     );
-  }
-
-  
-
-  _verifyPhoneNumber(value) {
-    final phoneRegex = RegExp(r'^\+?[0-9]{10,15}$');
-    if (!phoneRegex.hasMatch(value)) {
-      return "Veuillez entrer un numéro valide";
-    }
-    return null;
   }
 }

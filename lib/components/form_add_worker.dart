@@ -117,7 +117,7 @@ class _FormAddWorkerState extends State<FormAddWorker> {
                 : FocusNode(),
             validator: (value) {
               if (index == 2) return validator.verifEmail(value);
-              if (index == 3) return _verifPhoneNumber(value);
+              if (index == 3) return validator.verifPhoneNumber(value);
               if (index == 4 || index == 5) {
                 return _passwordValidator(index, value);
               }
@@ -204,13 +204,7 @@ class _FormAddWorkerState extends State<FormAddWorker> {
         ),
       );
 
-  _verifPhoneNumber(value) {
-    final phoneRegex = RegExp(r'^\+?[0-9]{10,15}$');
-    if (!phoneRegex.hasMatch(value)) {
-      return "Veuillez entrer un numéro valide";
-    }
-    return null;
-  }
+  
 
   Future<bool> checkIfEmailExists(String email) async {
     try {
