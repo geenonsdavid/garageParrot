@@ -117,7 +117,7 @@ class _FormAddWorkerState extends State<FormAddWorker> {
                 : FocusNode(),
             validator: (value) {
               if (index == 2) return validator.verifyEmail(value);
-              if (index == 3) return validator.verifPhoneNumber(value);
+              if (index == 3) return validator.verifyPhoneNumber(value);
               if (index == 4 || index == 5) {
                 return _passwordValidator(index, value);
               }
