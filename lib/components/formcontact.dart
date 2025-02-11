@@ -95,7 +95,7 @@ class FormContactState extends State<FormContact> {
                   customHintText: "Veuillez entrer votre email",
                   customFocus: _emailFocusNode,
                   customRequestFocus: _phoneFocusNode,
-                  validator: (value) => validator.verifEmail(value),
+                  validator: (value) => validator.verifyEmail(value),
                 ),
                 const SizedBox(height: 10),
                 CustomField(
