@@ -53,30 +53,30 @@ class _FormAddWorkerState extends State<FormAddWorker> {
       List.generate(_fields.length, (index) => TextEditingController());
 
   // créer instance ApiService
-  final ApiService _apiservice = ApiService();
+  final ApiService apiservice = ApiService();
 
   // crér instance Validator
   final Validator validator = Validator();
 
   Future<void> insertWorker() async {
     try {
-      await _apiservice.insertWorker(
+      await apiservice.insertWorker(
         _controllers,
         _focusNodes,
         (message) {
           if (mounted) {
-            _apiservice.showSuccessDialog(context, message);
+            apiservice.showSuccessDialog(context, message);
           }
         },
         (message) {
           if (mounted) {
-            _apiservice.showErrorDialog(context, message);
+            apiservice.showErrorDialog(context, message);
           }
         },
       );
     } catch (e) {
       if (mounted) {
-        _apiservice.showErrorDialog(context, "Une erreur est survenue");
+        apiservice.showErrorDialog(context, "Une erreur est survenue");
       }
     }
   }
@@ -102,7 +102,7 @@ class _FormAddWorkerState extends State<FormAddWorker> {
   }
 
   Future<void> getworkers() async {
-    await _apiservice.getWorkers();
+    await apiservice.getWorkers();
   }
 
   // build custom field
@@ -186,7 +186,7 @@ class _FormAddWorkerState extends State<FormAddWorker> {
     bool emailExists = await checkIfEmailExists(email);
 
     if (emailExists) {
-      _apiservice.showErrorDialog(context, "L'email existe déjà !");
+      apiservice.showErrorDialog(context, "L'email existe déjà !");
     } else if (_formKey.currentState!.validate()) {
       // Si l'email est unique, on soumet les données
       insertWorker();
@@ -215,7 +215,7 @@ class _FormAddWorkerState extends State<FormAddWorker> {
   Future<bool> checkIfEmailExists(String email) async {
     try {
       // Récupère tous les travailleurs en appelant la méthode qui retourne la liste
-      List<Map<String, dynamic>> workers = await _apiservice.getWorkers();
+      List<Map<String, dynamic>> workers = await apiservice.getWorkers();
 
       if (workers.isNotEmpty) {
         // Parcours de la liste des travailleurs pour vérifier si l'email existe
