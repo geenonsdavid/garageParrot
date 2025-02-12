@@ -14,16 +14,19 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
     Key? key,
     required this.title,
     required this.isScreenPhone,
-    this.onLogoutPressed,
   }) : super(key: key);
 
   final String title;
   final bool isScreenPhone;
-  final VoidCallback? onLogoutPressed;
 
   @override
   // Taille préférée de l'en-tête
   Size get preferredSize => Size.fromHeight(isScreenPhone ? 80 : 152);
+
+void _navigateToLogin(BuildContext context) {
+  Navigator.pushNamed(context, '/login'); // Navigue vers la page de connexion
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +59,7 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
                   style: Theme.of(context).textTheme.headlineMedium,
                 ),
               IconButton(
-                onPressed: onLogoutPressed,
+                onPressed: () => _navigateToLogin(context),
                 icon: SvgPicture.asset(
                   height: 24,
                   width: 24,
