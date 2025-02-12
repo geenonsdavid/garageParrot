@@ -20,48 +20,42 @@ class _AdminViewState extends State<AdminView> {
   @override
   Widget build(BuildContext context) {
     final currentWidth = MediaQuery.of(context).size.width;
-    bool isScreenPhone;
+
     bool isAdmin = true;
 
     // Responsivité : détermine si l'écran est un téléphone
-    if (currentWidth < 480) {
-      isScreenPhone = true;
-    } else {
-      isScreenPhone = false;
-    }
+    bool isScreenPhone = currentWidth < 480;
 
     return Scaffold(
       appBar: Header(title: widget.title, isScreenPhone: isScreenPhone),
       body: ListView(
+        padding: const EdgeInsets.all(16.0),
         children: [
-          Center(
-            child: Text(
-              'Liste des avis',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ),
+          _buildSectionTitle("Liste des avis"),
           const FormValidComment(),
           const Line(),
-          Center(
-            child: Text(
-              'Ajoutez un employé',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ),
+          _buildSectionTitle("Ajoutez un employé"),
           const FormAddWorker(),
-          Center(
-            child: Text(
-              'Ajoutez / Modifiez un service',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ),
-         
+          const SizedBox(height: 20),
+          _buildSectionTitle("Ajoutez / Modifiez un service"),
           const FormAddService(),
+          const SizedBox(height: 20),
           ListServicesView(isScreenPhone: isScreenPhone, isAdmin: isAdmin),
-
-          // Widget pour afficher le pied de page
+          const SizedBox(height: 20),
           Footer(isScreenPhone: isScreenPhone),
         ],
+      ),
+    );
+  }
+
+  Widget _buildSectionTitle(String title) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      child: Center(
+        child: Text(
+          title,
+          style: Theme.of(context).textTheme.headlineMedium,
+        ),
       ),
     );
   }
