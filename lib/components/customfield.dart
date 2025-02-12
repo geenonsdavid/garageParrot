@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:garage_parrot/themes/colors.dart';
 
 /// Widget personnalisé pour un champ de texte avec étiquette et indication.
 class CustomField extends StatefulWidget {
@@ -27,8 +28,6 @@ class CustomField extends StatefulWidget {
 
   @override
   State<CustomField> createState() => _CustomFieldState();
-
-  
 }
 
 class _CustomFieldState extends State<CustomField> {
@@ -58,21 +57,21 @@ class _CustomFieldState extends State<CustomField> {
         suffixIcon: widget.obscureText
             ? IconButton(
                 icon: Icon(
-                  _isObscured
-                      ? Icons.visibility_off
-                      : Icons.visibility,
+                  _isObscured ? Icons.visibility_off : Icons.visibility,
+                  color: primary,
                 ),
                 onPressed: () {
                   setState(() {
                     _isObscured = !_isObscured;
-                  },);
+                  });
                 },
                 tooltip: _isObscured
-                ? "Afficher le mot de passe"
-                : "Masquer le mot de passe",
+                    ? "Afficher le mot de passe"
+                    : "Masquer le mot de passe",
               )
             : null,
       ),
+      textInputAction: TextInputAction.next,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       // vérifie que le champ n'est pas vide
       validator: widget.validator,
