@@ -4,6 +4,7 @@ import 'package:garage_parrot/components/customfield.dart';
 import 'package:garage_parrot/components/list_workers.dart';
 import 'package:garage_parrot/themes/colors.dart';
 import 'package:garage_parrot/src/utils/validator.dart';
+import 'package:password_strength/password_strength.dart';
 
 class FormAddWorker extends StatefulWidget {
   const FormAddWorker({super.key});
@@ -85,9 +86,15 @@ class _FormAddWorkerState extends State<FormAddWorker> {
     if (value == null || value.trim().isEmpty) {
       return "Veuillez remplir ce champ";
     }
-    if (index == 4 && value.length < 6) {
-      return "Le mot de passe doit contenir au moins 6 caractères";
+    // verify strong password
+    double strength = estimatePasswordStrength(value);
+    if (strength < 0.8) {
+      return "Mot de passe trop faible";
     }
+
+    //if (index == 4 && value.length < 6) {
+    //  return "Le mot de passe doit contenir au moins 6 caractères";
+    //}
     if (index == 5 && value != _controllers[4].text) {
       return "Les mots de passe ne correspondent pas";
     }
@@ -107,6 +114,7 @@ class _FormAddWorkerState extends State<FormAddWorker> {
     return Column(
       children: [
         CustomField(
+            obscureText: index == 4  || index == 5,
             controller: _controllers[index],
             //context: context,
             customLabel: label,
@@ -203,8 +211,6 @@ class _FormAddWorkerState extends State<FormAddWorker> {
           _fields[index]["hintText"]!,
         ),
       );
-
-  
 
   Future<bool> checkIfEmailExists(String email) async {
     try {
