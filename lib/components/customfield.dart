@@ -65,8 +65,11 @@ class _CustomFieldState extends State<CustomField> {
                 onPressed: () {
                   setState(() {
                     _isObscured = !_isObscured;
-                  });
+                  },);
                 },
+                tooltip: _isObscured
+                ? "Afficher le mot de passe"
+                : "Masquer le mot de passe",
               )
             : null,
       ),
