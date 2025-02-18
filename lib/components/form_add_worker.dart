@@ -18,7 +18,7 @@ class FormAddWorker extends StatefulWidget {
 class _FormAddWorkerState extends State<FormAddWorker> {
   final _formKey = GlobalKey<FormState>();
 
-  // list label et hintText
+  // Liste des labels et des textes d'indice pour les champs du formulaire
   final List<Map<String, String>> _fields = [
     {
       "label": "Nom",
@@ -46,20 +46,19 @@ class _FormAddWorkerState extends State<FormAddWorker> {
     },
   ];
 
-  // list of focus nodes
-  late final _focusNodes =
-      List.generate(_fields.length, (index) => FocusNode());
+  // Liste des focus nodes pour gérer la navigation entre les champs
+  late final _focusNodes = List.generate(_fields.length, (index) => FocusNode());
 
-  // list of controllers
-  late final _controllers =
-      List.generate(_fields.length, (index) => TextEditingController());
+  // Liste des contrôleurs pour récupérer les valeurs des champs du formulaire
+  late final _controllers = List.generate(_fields.length, (index) => TextEditingController());
 
-  // créer instance ApiService
+  // Créer une instance d'ApiService pour les appels API
   final ApiService apiservice = ApiService();
 
-  // crér instance Validator
+  // Créer une instance de Validator pour la validation des champs
   final Validator validator = Validator();
 
+  // Fonction pour effacer les champs du formulaire
   void _clearForm() {
     for (var controller in _controllers) {
       controller.clear();
@@ -71,37 +70,31 @@ class _FormAddWorkerState extends State<FormAddWorker> {
     if (value == null || value.trim().isEmpty) {
       return "Veuillez remplir ce champ";
     }
-    // verify strong password
+    // Vérifier la robustesse du mot de passe
     double strength = estimatePasswordStrength(value);
     if (strength < 0.8) {
       return "Mot de passe trop faible";
     }
 
-    //if (index == 4 && value.length < 6) {
-    //  return "Le mot de passe doit contenir au moins 6 caractères";
-    //}
+    // Vérifier si les mots de passe correspondent
     if (index == 5 && value != _controllers[4].text) {
       return "Les mots de passe ne correspondent pas";
     }
     return null;
   }
 
+  // Récupérer les travailleurs via l'API
   Future<void> getworkers() async {
     await apiservice.getWorkers();
   }
 
-  // build custom field
-  // index: index of the field
-  // label: label of the field
-  // hintText: hint text of the field
-  // return: custom field widget
+  // Construire un champ personnalisé
   Widget _buildCustomField(int index, String label, String hintText) {
     return Column(
       children: [
         CustomField(
             obscureText: index == 4 || index == 5,
             controller: _controllers[index],
-            //context: context,
             customLabel: label,
             customHintText: hintText,
             customFocus: _focusNodes[index],
@@ -121,6 +114,7 @@ class _FormAddWorkerState extends State<FormAddWorker> {
     );
   }
 
+  // Construire l'interface du formulaire
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -136,15 +130,12 @@ class _FormAddWorkerState extends State<FormAddWorker> {
         key: _formKey,
         child: Column(
           children: <Widget>[
-            ..._buildCustomFields(), // custom fields
+            ..._buildCustomFields(), // Champs personnalisés
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                _buildSubmitButton(
-                    "Liste des employés", _viewList), // submit button,
-                _buildSubmitButton(
-                    "Ajouter un employé", _onSubmit) // submit button
-                ,
+                _buildSubmitButton("Liste des employés", _viewList), // Bouton pour afficher la liste des employés
+                _buildSubmitButton("Ajouter un employé", _onSubmit), // Bouton pour ajouter un employé
               ],
             ),
           ],
@@ -153,25 +144,21 @@ class _FormAddWorkerState extends State<FormAddWorker> {
     );
   }
 
-  // build submit button
-  // label: label of the button
-  // onSubmit: function to call when the button is pressed
-  // return: submit button widget
-  Widget _buildSubmitButton(label, onSubmit) => ElevatedButton.icon(
+  // Construire un bouton de soumission
+  Widget _buildSubmitButton(String label, VoidCallback onSubmit) => ElevatedButton.icon(
         icon: const Icon(Icons.task_alt),
         onPressed: onSubmit,
         label: Text(label),
       );
 
-  // on submit
-  // validate the form
+  // Valider et soumettre le formulaire
   void _onSubmit() async {
     if (_formKey.currentState!.validate()) {
       // Vérifier si l'email existe déjà
       final email = _controllers[2].text.trim();
       bool emailExists = await checkIfEmailExists(email);
       if (emailExists) {
-        if (mounted) showErrorDialog(context,"L'email existe déjà !");
+        if (mounted) showErrorDialog(context, "L'email existe déjà !");
       } else {
         Worker newWorker = Worker(
           id: "",
@@ -187,26 +174,25 @@ class _FormAddWorkerState extends State<FormAddWorker> {
             if (mounted) showSuccessDialog(context, "Employé créé avec succès");
             _clearForm();
           } else {
-            if (mounted) showErrorDialog(context,"Erreur lors de la création de l'employé");
+            if (mounted) showErrorDialog(context, "Erreur lors de la création de l'employé");
           }
         } catch (e) {
-          if (mounted) (context,"Une erreur est survenue : $e");
+          if (mounted) showErrorDialog(context, "Une erreur est survenue : $e");
         }
       }
     }
   }
 
-  // view list
+  // Ouvrir la vue de la liste des employés
   void _viewList() {
-    // open view listWorkers
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => const ListWorkers()),
     );
   }
 
-  // build custom fields
-  _buildCustomFields() => List.generate(
+  // Construire les champs personnalisés
+  List<Widget> _buildCustomFields() => List.generate(
         _fields.length,
         (index) => _buildCustomField(
           index,
@@ -215,23 +201,20 @@ class _FormAddWorkerState extends State<FormAddWorker> {
         ),
       );
 
+  // Vérifier si l'email existe déjà
   Future<bool> checkIfEmailExists(String email) async {
     try {
-      // Récupère tous les travailleurs en appelant la méthode qui retourne la liste
       List<Worker> workers = await apiservice.getWorkers();
 
-      if (workers.isNotEmpty) {
-        // Parcours de la liste des travailleurs pour vérifier si l'email existe
-        for (var worker in workers) {
-          if (worker.email == email) {
-            return true; // Si l'email est trouvé, il existe déjà
-          }
+      for (var worker in workers) {
+        if (worker.email == email) {
+          return true;
         }
       }
-      return false; // Si l'email n'a pas été trouvé
+      return false;
     } catch (e) {
       debugPrint('Erreur de vérification de l\'email: $e');
-      return false; // En cas d'erreur, on considère que l'email n'existe pas
+      return false;
     }
   }
 }
