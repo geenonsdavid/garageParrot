@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:garage_parrot/components/api_service.dart';
 import 'package:garage_parrot/components/customfield.dart';
+import 'package:garage_parrot/src/utils/dialog_helpers.dart';
 import 'package:garage_parrot/components/list_workers.dart';
+import 'package:garage_parrot/components/worker.dart';
 import 'package:garage_parrot/themes/colors.dart';
 import 'package:garage_parrot/src/utils/validator.dart';
 import 'package:password_strength/password_strength.dart';
@@ -58,26 +60,9 @@ class _FormAddWorkerState extends State<FormAddWorker> {
   // crér instance Validator
   final Validator validator = Validator();
 
-  Future<void> insertWorker() async {
-    try {
-      await apiservice.insertWorker(
-        _controllers,
-        _focusNodes,
-        (message) {
-          if (mounted) {
-            apiservice.showSuccessDialog(context, message);
-          }
-        },
-        (message) {
-          if (mounted) {
-            apiservice.showErrorDialog(context, message);
-          }
-        },
-      );
-    } catch (e) {
-      if (mounted) {
-        apiservice.showErrorDialog(context, "Une erreur est survenue");
-      }
+  void _clearForm() {
+    for (var controller in _controllers) {
+      controller.clear();
     }
   }
 
@@ -114,7 +99,7 @@ class _FormAddWorkerState extends State<FormAddWorker> {
     return Column(
       children: [
         CustomField(
-            obscureText: index == 4  || index == 5,
+            obscureText: index == 4 || index == 5,
             controller: _controllers[index],
             //context: context,
             customLabel: label,
@@ -181,15 +166,33 @@ class _FormAddWorkerState extends State<FormAddWorker> {
   // on submit
   // validate the form
   void _onSubmit() async {
-    // Vérification si l'email existe déjà
-    final email = _controllers[2].text.trim(); // L'email est à l'index 2
-    bool emailExists = await checkIfEmailExists(email);
-
-    if (emailExists) {
-      apiservice.showErrorDialog(context, "L'email existe déjà !");
-    } else if (_formKey.currentState!.validate()) {
-      // Si l'email est unique, on soumet les données
-      insertWorker();
+    if (_formKey.currentState!.validate()) {
+      // Vérifier si l'email existe déjà
+      final email = _controllers[2].text.trim();
+      bool emailExists = await checkIfEmailExists(email);
+      if (emailExists) {
+        if (mounted) showErrorDialog(context,"L'email existe déjà !");
+      } else {
+        Worker newWorker = Worker(
+          id: "",
+          name: _controllers[0].text.trim(),
+          lastname: _controllers[1].text.trim(),
+          email: _controllers[2].text.trim(),
+          phone: _controllers[3].text.trim(),
+          userpassword: _controllers[4].text.trim(),
+        );
+        try {
+          bool success = await apiservice.insertWorker(newWorker);
+          if (success) {
+            if (mounted) showSuccessDialog(context, "Employé créé avec succès");
+            _clearForm();
+          } else {
+            if (mounted) showErrorDialog(context,"Erreur lors de la création de l'employé");
+          }
+        } catch (e) {
+          if (mounted) (context,"Une erreur est survenue : $e");
+        }
+      }
     }
   }
 
@@ -215,12 +218,12 @@ class _FormAddWorkerState extends State<FormAddWorker> {
   Future<bool> checkIfEmailExists(String email) async {
     try {
       // Récupère tous les travailleurs en appelant la méthode qui retourne la liste
-      List<Map<String, dynamic>> workers = await apiservice.getWorkers();
+      List<Worker> workers = await apiservice.getWorkers();
 
       if (workers.isNotEmpty) {
         // Parcours de la liste des travailleurs pour vérifier si l'email existe
         for (var worker in workers) {
-          if (worker['email'] == email) {
+          if (worker.email == email) {
             return true; // Si l'email est trouvé, il existe déjà
           }
         }
