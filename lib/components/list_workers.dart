@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:garage_parrot/components/dialog_helpers.dart';
+import 'package:garage_parrot/src/utils/dialog_helpers.dart';
 import 'package:garage_parrot/components/worker.dart';
 import 'package:garage_parrot/themes/colors.dart';
 import 'package:garage_parrot/components/api_service.dart';
@@ -78,8 +78,8 @@ class ListWorkersState extends State<ListWorkers> {
                       apiService.deleteWorker(
                         context,
                         int.parse(id),
-                        (message) => showSuccessDialog(context, message),
-                        (message) => showErrorDialog(context, message),
+                        (message) => showSuccessDialog(context,message),
+                        (message) => showErrorDialog(context,message),
                       );
                     });
               },
