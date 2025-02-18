@@ -7,7 +7,13 @@ class Worker {
   final String email;
   final String phone;
 
-  Worker({required this.id, required this.name, required this.lastname, required this.email, required this.phone});
+  Worker({
+    required this.id,
+    required this.name,
+    required this.lastname,
+    required this.email,
+    required this.phone}
+    );
 
   // Factory method to create a Worker instance from a JSON object
   factory Worker.fromJson(Map<String, dynamic> json) {
