@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:garage_parrot/components/api_service.dart';
 import 'package:garage_parrot/components/customfield.dart';
 import 'package:garage_parrot/src/utils/validator.dart';
 
@@ -20,6 +21,8 @@ class _LoginPageState extends State<LoginPage> {
   final FocusNode passwordFocus = FocusNode();
 
   final Validator validator = Validator();
+
+  final ApiService apiservice = ApiService();
 
   // Clé du formulaire
   final _formKey = GlobalKey<FormState>();
@@ -68,24 +71,48 @@ class _LoginPageState extends State<LoginPage> {
                 obscureText: true,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
+                    // vérifier si l'email et le mot de passe son correcte dans la base de données
                     return 'Veuillez saisir le mot de passe';
                   }
                   return null;
                 },
               ),
               const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    Navigator.pushReplacementNamed(context, '/home');
-                  }
-                },
-                child: const Text('Se connecter'),
-              ),
+              _buildSubmitButton("Connexion", _onSubmit),
             ],
           ),
         ),
       ),
     );
+  }
+
+  Widget _buildSubmitButton(label, onSubmit) => ElevatedButton.icon(
+        icon: const Icon(Icons.task_alt),
+        onPressed: onSubmit,
+        label: Text(label),
+      );
+
+  void _onSubmit() async {
+    if (_formKey.currentState!.validate()) {
+      try {
+        bool success = await apiservice.login(
+          emailController.text.trim(),
+          passwordController.text.trim(),
+        );
+        debugPrint("success = $success");
+        if (success) {
+          //_showSuccessDialog("Connexion réussie");
+          if (mounted) {
+            Navigator.pushNamed(context, '/admin');
+          }
+        } else {
+          //showErrorDialog("Email ou mot de passe incorrect");
+          throw Exception("Email ou mot de passe incorrect");
+        }
+      } catch (e) {
+        //showErrorDialog("Une erreur s'est produite : $e");
+        throw Exception("Une erreur s'est produite : $e");
+      }
+    }
   }
 }
