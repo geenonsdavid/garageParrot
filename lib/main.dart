@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:garage_parrot/views/admin_view.dart';
 import 'package:garage_parrot/views/homepage.dart';
 import 'package:garage_parrot/themes/theme.dart';
 import 'package:garage_parrot/views/login_page.dart';
@@ -21,7 +22,8 @@ class MyApp extends StatelessWidget {
       initialRoute: '/home',  // Route initiale
       routes: {
         '/home': (context) => HomePage(title: title),
-        '/login': (context) => LoginPage(), // Route vers la page de connexion
+        '/login': (context) => const LoginPage(), 
+        '/admin' : (context) =>  const AdminView(title: "admin"),// Route vers la page de connexion
       },
     );
   }
