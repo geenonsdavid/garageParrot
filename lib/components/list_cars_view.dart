@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:garage_parrot/components/car.dart';
-import 'package:garage_parrot/components/car_data.dart';
+import 'package:garage_parrot/models/car_data.dart';
 
 
 class ListCarsView extends StatefulWidget {
