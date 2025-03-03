@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:garage_parrot/components/api_service.dart';
+import 'package:garage_parrot/services/api_service.dart';
 import 'package:garage_parrot/components/customfield.dart';
+import 'package:garage_parrot/models/user_model.dart';
 import 'package:garage_parrot/src/utils/validator.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -102,7 +104,10 @@ class _LoginPageState extends State<LoginPage> {
         debugPrint("success = $success");
         if (success) {
           //_showSuccessDialog("Connexion réussie");
+          // Définir le rôle de l'utilisateur en tant qu'admin
+          
           if (mounted) {
+            Provider.of<UserModel>(context, listen: false).setRole("admin");
             Navigator.pushNamed(context, '/admin');
           }
         } else {
