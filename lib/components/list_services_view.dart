@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:garage_parrot/components/service.dart';
+import 'package:garage_parrot/components/widget_service.dart';
 import 'package:garage_parrot/components/services_data.dart';
 
 class ListServicesView extends StatefulWidget {
@@ -26,7 +26,7 @@ class _ListServicesState extends State<ListServicesView> {
         final String description = service["description"].toString();
         return Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Service(
+          child: WidgetService(
             title: title,
             image: image,
             description: description,
