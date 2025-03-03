@@ -5,7 +5,9 @@ import 'package:garage_parrot/components/form_add_worker.dart';
 import 'package:garage_parrot/components/form_valid_comment.dart';
 import 'package:garage_parrot/components/header.dart';
 import 'package:garage_parrot/components/line.dart';
-import 'package:garage_parrot/views/list_services_view.dart';
+import 'package:garage_parrot/models/user_model.dart';
+import 'package:garage_parrot/components/list_services_view.dart';
+import 'package:provider/provider.dart';
 
 class AdminView extends StatefulWidget {
   const AdminView({super.key, required this.title});
@@ -21,13 +23,29 @@ class _AdminViewState extends State<AdminView> {
   Widget build(BuildContext context) {
     final currentWidth = MediaQuery.of(context).size.width;
 
-    bool isAdmin = true;
+    final userRole = Provider.of<UserModel>(context).role;
+   // final isLoggedIn = Provider.of<UserModel>(context).isLoggedIn;
+
+    //if (!isLoggedIn) {
+     // WidgetsBinding.instance.addPostFrameCallback((_) {
+     //   Navigator.pushReplacementNamed(context, '/login');
+    //  });
+   //   return const Scaffold(
+  //      body: Center(child: CircularProgressIndicator()),
+   //   );
+   // }
+
+    bool isAdmin = userRole == "admin";// init isAdmin
 
     // Responsivité : détermine si l'écran est un téléphone
     bool isScreenPhone = currentWidth < 480;
 
     return Scaffold(
-      appBar: Header(title: widget.title, isScreenPhone: isScreenPhone),
+      appBar: Header(
+        title: widget.title,
+        isScreenPhone: isScreenPhone,
+        userRole: userRole,
+      ),
       body: ListView(
         padding: const EdgeInsets.all(16.0),
         children: [
