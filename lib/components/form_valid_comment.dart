@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:garage_parrot/components/comment.dart';
-import 'package:garage_parrot/list_comment.dart';
+import 'package:garage_parrot/models/list_comment.dart';
 import 'package:garage_parrot/themes/colors.dart';
 
 class FormValidComment extends StatefulWidget {
