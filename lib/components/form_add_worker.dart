@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:garage_parrot/components/api_service.dart';
+import 'package:garage_parrot/services/api_service.dart';
 import 'package:garage_parrot/components/customfield.dart';
 import 'package:garage_parrot/src/utils/dialog_helpers.dart';
 import 'package:garage_parrot/components/list_workers.dart';
-import 'package:garage_parrot/components/worker.dart';
+import 'package:garage_parrot/models/user.dart';
 import 'package:garage_parrot/themes/colors.dart';
 import 'package:garage_parrot/src/utils/validator.dart';
 import 'package:password_strength/password_strength.dart';
@@ -85,7 +85,7 @@ class _FormAddWorkerState extends State<FormAddWorker> {
 
   // Récupérer les travailleurs via l'API
   Future<void> getworkers() async {
-    await apiservice.getWorkers();
+    await apiservice.getUsers();
   }
 
   // Construire un champ personnalisé
@@ -160,7 +160,7 @@ class _FormAddWorkerState extends State<FormAddWorker> {
       if (emailExists) {
         if (mounted) showErrorDialog(context, "L'email existe déjà !");
       } else {
-        Worker newWorker = Worker(
+        User newUser = User(
           id: "",
           name: _controllers[0].text.trim(),
           lastname: _controllers[1].text.trim(),
@@ -169,7 +169,7 @@ class _FormAddWorkerState extends State<FormAddWorker> {
           userpassword: _controllers[4].text.trim(),
         );
         try {
-          bool success = await apiservice.insertWorker(newWorker);
+          bool success = await apiservice.insertUser(newUser);
           if (success) {
             if (mounted) showSuccessDialog(context, "Employé créé avec succès");
             _clearForm();
@@ -187,7 +187,7 @@ class _FormAddWorkerState extends State<FormAddWorker> {
   void _viewList() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const ListWorkers()),
+      MaterialPageRoute(builder: (context) => const ListUsers()),
     );
   }
 
@@ -204,7 +204,7 @@ class _FormAddWorkerState extends State<FormAddWorker> {
   // Vérifier si l'email existe déjà
   Future<bool> checkIfEmailExists(String email) async {
     try {
-      List<Worker> workers = await apiservice.getWorkers();
+      List<User> workers = await apiservice.getUsers();
 
       for (var worker in workers) {
         if (worker.email == email) {
