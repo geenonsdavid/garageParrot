@@ -14,19 +14,20 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
     Key? key,
     required this.title,
     required this.isScreenPhone,
+    required this.userRole,
   }) : super(key: key);
 
   final String title;
   final bool isScreenPhone;
+  final String userRole;
 
   @override
   // Taille préférée de l'en-tête
   Size get preferredSize => Size.fromHeight(isScreenPhone ? 80 : 152);
 
-void _navigateToLogin(BuildContext context) {
-  Navigator.pushNamed(context, '/login'); // Navigue vers la page de connexion
-}
-
+  void _navigateToLogin(BuildContext context) {
+    Navigator.pushNamed(context, '/login'); // Navigue vers la page de connexion
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -152,29 +153,35 @@ void _navigateToLogin(BuildContext context) {
                 isScreenPhone,
                 context,
                 () {
-                  // Naviguer vers la page d'administrateur
-                  Navigator.pushReplacement(
-                    context,
-                    PageRouteBuilder(
-                      pageBuilder: (context, animation, secondaryAnimation) =>
-                          AdminView(title: title),
-                      transitionsBuilder:
-                          (context, animation, secondaryAnimation, child) {
-                        const begin = Offset(1.0, 0.0);
-                        const end = Offset.zero;
-                        const curve = Curves.ease;
+                  if (userRole == "admin") {
+                    // Naviguer vers la page d'administrateur
+                    Navigator.pushReplacement(
+                      context,
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation, secondaryAnimation) =>
+                            AdminView(title: title),
+                        transitionsBuilder:
+                            (context, animation, secondaryAnimation, child) {
+                          const begin = Offset(1.0, 0.0);
+                          const end = Offset.zero;
+                          const curve = Curves.ease;
 
-                        var tween = Tween(begin: begin, end: end)
-                            .chain(CurveTween(curve: curve));
-                        var offsetAnimation = animation.drive(tween);
+                          var tween = Tween(begin: begin, end: end)
+                              .chain(CurveTween(curve: curve));
+                          var offsetAnimation = animation.drive(tween);
 
-                        return SlideTransition(
-                          position: offsetAnimation,
-                          child: child,
-                        );
-                      },
-                    ),
-                  );
+                          return SlideTransition(
+                            position: offsetAnimation,
+                            child: child,
+                          );
+                        },
+                      ),
+                    );
+                  }else{
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Accès réservé aux administrateurs')),
+                    );
+                  }
                 },
                 iconSize,
               ),
