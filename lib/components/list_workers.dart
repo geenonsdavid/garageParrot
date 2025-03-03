@@ -1,20 +1,20 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:garage_parrot/src/utils/dialog_helpers.dart';
-import 'package:garage_parrot/components/worker.dart';
+import 'package:garage_parrot/models/user.dart';
 import 'package:garage_parrot/themes/colors.dart';
-import 'package:garage_parrot/components/api_service.dart';
+import 'package:garage_parrot/services/api_service.dart';
 import 'package:http/http.dart' as http;
 
-class ListWorkers extends StatefulWidget {
-  const ListWorkers({super.key});
+class ListUsers extends StatefulWidget {
+  const ListUsers({super.key});
 
   @override
-  ListWorkersState createState() => ListWorkersState();
+  ListUsersState createState() => ListUsersState();
 }
 
-class ListWorkersState extends State<ListWorkers> {
-  List<Worker> _workers = []; // List workers
+class ListUsersState extends State<ListUsers> {
+  List<User> _workers = []; // List users
   bool _isLoading = true; // variable pour le chargement
   final ApiService apiService = ApiService(); // Instance d'ApiService
 
@@ -38,7 +38,7 @@ class ListWorkersState extends State<ListWorkers> {
       // Mettre à jour l'état de l'application
       setState(() {
         // Ajouter les travailleurs récupérés à la liste
-        _workers = data.map((worker) => Worker.fromJson(worker)).toList();
+        _workers = data.map((user) => User.fromJson(user)).toList();
       });
     } else {
       setState(() {
@@ -68,14 +68,14 @@ class ListWorkersState extends State<ListWorkers> {
           : ListView.builder(
               itemCount: _workers.length,
               itemBuilder: (context, index) {
-                final worker = _workers[index];
+                final user = _workers[index];
                 return WorkerInfoView(
-                    worker: worker,
+                    user: user,
                     onDelete: (id) {
                       setState(() {
                         _workers.removeWhere((w) => w.id == id);
                       });
-                      apiService.deleteWorker(
+                      apiService.deleteUser(
                         context,
                         int.parse(id),
                         (message) => showSuccessDialog(context,message),
@@ -91,11 +91,11 @@ class ListWorkersState extends State<ListWorkers> {
 class WorkerInfoView extends StatelessWidget {
   const WorkerInfoView({
     super.key,
-    required this.worker,
+    required this.user,
     required this.onDelete,
   });
 
-  final Worker worker;
+  final User user;
   final Function(String) onDelete;
 
   @override
@@ -104,22 +104,22 @@ class WorkerInfoView extends StatelessWidget {
       color: primary,
       child: ListTile(
         textColor: secondary,
-        title: Text('${worker.name} ${worker.lastname}',
+        title: Text('${user.name} ${user.lastname}',
             style: Theme.of(context).textTheme.headlineSmall),
         subtitle:
-            Text(worker.email, style: Theme.of(context).textTheme.bodyLarge),
+            Text(user.email, style: Theme.of(context).textTheme.bodyLarge),
         // phone icon + phone number
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             const Icon(Icons.phone, color: secondary),
-            Text(worker.phone, style: Theme.of(context).textTheme.bodyLarge),
-            // button to delete worker
+            Text(user.phone, style: Theme.of(context).textTheme.bodyLarge),
+            // button to delete user
             IconButton(
               icon: const Icon(Icons.delete, color: secondary),
               onPressed: () {
-                // delete worker
-                onDelete(worker.id);
+                // delete user
+                onDelete(user.id);
               },
             ),
           ],
