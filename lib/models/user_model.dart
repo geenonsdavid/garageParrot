@@ -1,26 +1,27 @@
 import 'package:flutter/material.dart';
 
 class UserModel extends ChangeNotifier {
-  String _role = 'user';
+  String _userRole = 'guest';
   bool _isLoggedIn = false;
 
-  String get role => _role;
+  String get userRole => _userRole;
   bool get isLoggedIn => _isLoggedIn;
 
-  void setRole(String role) {
-    _role = role;
+  void setUserRole(String role) {
+    _userRole = role;
     notifyListeners();
   }
 
   void login(String role) {
     _isLoggedIn = true;
-    _role = role;
+    _userRole = role;
     notifyListeners();
   }
 
   void logout() {
     _isLoggedIn = false;
-    _role = 'user';
+    _userRole = 'guest';
     notifyListeners();
   }
+
 }

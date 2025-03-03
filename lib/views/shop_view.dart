@@ -25,7 +25,7 @@ class _ShopViewState extends State<ShopView> {
     } else {
       isScreenPhone = false;
     }
-    bool isAdmin = Provider.of<UserModel>(context, listen: false).role == "admin";
+    bool isAdmin = Provider.of<UserModel>(context, listen: false).userRole == "admin";
 
     return Scaffold(
       appBar: Header(

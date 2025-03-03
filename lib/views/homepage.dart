@@ -17,18 +17,11 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    
-    bool isAdmin = Provider.of<UserModel>(context).role == "admin";
+    final userRole = Provider.of<UserModel>(context).userRole;
+    final bool isAdmin = userRole == "admin";
 
     final currentWidth = MediaQuery.of(context).size.width;
-    bool isScreenPhone;
-
-    // Responsivité : détermine si l'écran est un téléphone
-    if (currentWidth < 480) {
-      isScreenPhone = true;
-    } else {
-      isScreenPhone = false;
-    }
+    final bool isScreenPhone = currentWidth < 480;
 
     return Scaffold(
       appBar: Header(

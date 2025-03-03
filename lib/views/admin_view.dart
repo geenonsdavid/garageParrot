@@ -23,7 +23,7 @@ class _AdminViewState extends State<AdminView> {
   Widget build(BuildContext context) {
     final currentWidth = MediaQuery.of(context).size.width;
 
-    final userRole = Provider.of<UserModel>(context).role;
+    final userRole = Provider.of<UserModel>(context).userRole;
    // final isLoggedIn = Provider.of<UserModel>(context).isLoggedIn;
 
     //if (!isLoggedIn) {
