@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:garage_parrot/components/worker.dart';
+import 'package:garage_parrot/models/service_auto.dart';
+import 'package:garage_parrot/models/user.dart';
 import 'package:http/http.dart' as http;
+
 
 class ApiService {
   final String baseUrl = "http://127.0.0.1/garageparrot_api/";
@@ -41,11 +43,11 @@ class ApiService {
   }
 
   // Méthode pour insérer un nouveau travailleur
-  Future<bool> insertWorker(Worker worker) async {
+  Future<bool> insertUser(User user) async {
     try {
       final res = await http.post(
         getUri("insert_worker.php"),
-        body: worker.toMap(),
+        body: user.toMap(),
       );
 
       if (res.statusCode == 200) {
@@ -60,7 +62,7 @@ class ApiService {
   }
 
   // Méthode pour récupérer la liste des travailleurs
-  Future<List<Worker>> getWorkers() async {
+  Future<List<User>> getUsers() async {
     try {
       var res = await http.get(getUri("get_workers.php"));
 
@@ -68,7 +70,9 @@ class ApiService {
         var response = jsonDecode(res.body);
 
         if (response is List) {
-          return response.map((workerJson) => Worker.fromJson(workerJson)).toList();
+          return response
+              .map((workerJson) => User.fromJson(workerJson))
+              .toList();
         } else {
           throw Exception("Structure de réponse inattendue");
         }
@@ -81,7 +85,7 @@ class ApiService {
   }
 
   // Méthode pour supprimer un travailleur
-  Future<void> deleteWorker(
+  Future<void> deleteUser(
     BuildContext context,
     int workerId,
     void Function(String message) showSuccessDialog,
@@ -101,7 +105,7 @@ class ApiService {
 
       var response = jsonDecode(res.body);
       debugPrint("response $response");
-      if (response["message"] == "Worker supprimé") {
+      if (response["message"] == "user supprimé") {
         showSuccessDialog("Employé supprimé avec succès");
       } else {
         showErrorDialog("Erreur lors de la suppression de l'employé");
@@ -111,4 +115,58 @@ class ApiService {
       showErrorDialog("erreur de requête: $e");
     }
   }
+
+  
+
+  Future<bool> insertService(ServiceAuto service) async {
+  try {
+    var url = getUri("insert_service.php");
+
+    // Vérifier si l'image est valide
+    if (service.photo.isEmpty) {
+      throw Exception("L'image ne peut pas être vide");
+    }
+
+    // Convertir l'image en base64
+    String base64Image = base64Encode(service.photo);
+
+    // Construire le body de la requête
+    var body = {
+      "title": service.title,
+      "description": service.description,
+      "photo": base64Image, // Envoyer l'image en base64
+    };
+
+    debugPrint("📤 Envoi des données: ${jsonEncode(body)}");
+
+    // Envoyer la requête POST
+    var response = await http.post(
+      url,
+      headers: {"Content-Type": "application/json"}, // Indiquer que c'est du JSON
+      body: jsonEncode(body),
+    );
+
+    if (response.statusCode == 200) {
+      var jsonResponse = jsonDecode(response.body);
+      if (jsonResponse['success'] == true) {
+        return true;
+      } else {
+        debugPrint("Erreur API: ${jsonResponse['message']}");
+        return false;
+      }
+    } else {
+      debugPrint("⚠️ Erreur HTTP ${response.statusCode}: ${response.body}");
+      return false;
+    }
+  } catch (e) {
+    debugPrint("❌ Erreur lors de l'insertion du service: $e");
+    return false;
+  }
 }
+
+}
+
+
+
+
+
